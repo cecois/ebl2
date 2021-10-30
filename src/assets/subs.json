@@ -1,0 +1,82 @@
+[{
+    "og": "Aisle",
+    "re": "Asl"
+}, {
+    "og": "Avenue",
+    "re": "Av"
+}, {
+    "og": "Parking",
+    "re": "Pkng"
+}, {
+    "og": "Beechwood",
+    "re": "Bchwd"
+}, {
+    "og": "Bikepath",
+    "re": "Pth"
+}, {
+    "og": "Branch",
+    "re": "Brnch"
+}, {
+    "og": "Circle",
+    "re": "Cir"
+}, {
+    "og": "Connector",
+    "re": "Cnctr"
+}, {
+    "og": "Court",
+    "re": "Ct"
+}, {
+    "og": "Crescent",
+    "re": "Cres"
+}, {
+    "og": "Crossway",
+    "re": "Cxwy"
+}, {
+    "og": "Drive",
+    "re": "Dr"
+}, {
+    "og": "Driveway",
+    "re": "Way"
+}, {
+    "og": "Extension",
+    "re": "Ext"
+}, {
+    "og": "Lane",
+    "re": "Ln"
+}, {
+    "og": "Parkway",
+    "re": "Pkwy"
+}, {
+    "og": "Path",
+    "re": "Pth"
+}, {
+    "og": "Place",
+    "re": "Pl"
+}, {
+    "og": "Road",
+    "re": "Rd"
+}, {
+    "og": "Rotary",
+    "re": "Rtry"
+}, {
+    "og": "Square",
+    "re": "Sq"
+}, {
+    "og": "Street",
+    "re": "St"
+}, {
+    "og": "Terrace",
+    "re": "Ter"
+}, {
+    "og": "Trail",
+    "re": "Trl"
+}, {
+    "og": "Turnpike",
+    "re": "Pike"
+}, {
+    "og": "Vale",
+    "re": "Vl"
+}, {
+    "og": "Way",
+    "re": "Way"
+}]
