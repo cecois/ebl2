@@ -165,14 +165,14 @@ const options = {
 const _abbreviate = (og) => {
 
   let pieces = og.split(" ") //wORDs iN THe oG striNG
-  console.log("pieces", pieces);
+    // console.log("pieces", pieces);
   let sub = pieces.map(piece => {
-    let subbb = PROPS.subs.find(subb => subb.og.toLowerCase() == piece.toLowerCase());
-    return subbb ? subbb : null;
-  }).filter(Boolean)
-  console.log("sub", sub);
+      let subbb = PROPS.subs.find(subb => subb.og.toLowerCase() == piece.toLowerCase());
+      return subbb ? subbb : null;
+    }).filter(Boolean)
+    // console.log("sub", sub);
   let rep = (sub && sub.length > 1) ? og.replace(sub[0].og, sub[0].re) : og;
-  console.log("rep", rep);
+  // console.log("rep", rep);
   return rep;
 
 }

@@ -45,12 +45,13 @@
             </div>
           </div>
           <!-- Responsive navbar -->
-          <a @click.prevent="_FAKETRACE" class="nav-button underline mr-7 pr-4 border-r-2" href="">FT</a>
+          <!-- <a @click.prevent="_FAKETRACE" class="nav-button underline mr-7 pr-4 border-r-2" href="">FT</a> -->
           <a @click.prevent="region=_region.handle" :class="['nav-button',_region.handle==region?'nav-button-chosen':'','mr-4']" href="#" v-for="_region in _REGIONS">{{_region.label}}</a>
           <p>
             <PauseIcon @click.prevent="_PAUSED=!_PAUSED" v-if="!_PAUSED" class="h-7 w-7 nav-button" />
             <PlayIcon @click.prevent="_PAUSED=!_PAUSED" v-else class="h-7 w-7 nav-button" />
           </p>
+          <p>{{_TRACE.length}}</p>
           <!-- <a class="xl:hidden flex mr-6 items-center" href="#">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -112,6 +113,7 @@ const ROUTE = useRoute(),
   //A coupLe WE goNNA PurTuRb coNSTAntly
   _ZOOM = ref(PROPS.zoom),
   _BASEMAP = ref(PROPS.basemap),
+  _META = ref({ log: [] }),
   _CENTER = ref(PROPS.center ? PROPS.center : "-100,50"),
   // _CENTERLINES = { brighton: {}, brookline: {} },
   _TRACKS = null,
@@ -175,14 +177,14 @@ const _BASEMAPS = [{
 }, {
   name: "Stamen Toner Lite",
   handle: "stamen_toner_lite",
-  urii: "http://{s}.tile.stamen.com/toner-lite/{z}/{x}/{y}@2x.png",
-  thmb: "http://c.tile.stamen.com/toner-lite/18/79279/96968@2x.png",
+  urii: "https://{s}.tile.stamen.com/toner-lite/{z}/{x}/{y}@2x.png",
+  thmb: "https://c.tile.stamen.com/toner-lite/18/79279/96968@2x.png",
   hue: "light"
 }, {
   name: "Google Hybrid",
   handle: "google_hybrid",
-  urii: "http://mt3.google.com/vt/lyrs=y&x={x}&y={y}&z={z}",
-  thmb: "http://mt3.google.com/vt/lyrs=y&x=79279&y=96968&z=18",
+  urii: "https://mt3.google.com/vt/lyrs=y&x={x}&y={y}&z={z}",
+  thmb: "https://mt3.google.com/vt/lyrs=y&x=79279&y=96968&z=18",
   hue: "dark"
 }, {
   name: "OpenCycleMap",
@@ -228,6 +230,39 @@ watch(() => [PROPS.region, PROPS.card, _ZOOM.value, _CENTER.value, _BASEMAP.valu
 })
 
 onMounted(() => {
+
+  // if ('geolocation' in navigator) {
+  navigator.geolocation.watchPosition((watchedPosition => {
+
+      // rEmovE olDEST fRom tRACE if tHere ArE EnoUgH
+      // let oldest = trace.value.trace.length >= 10 ? trace.value.trace.shift() : null
+      // add IT To THE ArcHIvE
+      // oldest && trace.value.archive.push(oldest)
+      // PUT tHE NEW ONE in The adtIVe TrACE
+      // trace.value.trace.push({ lat: watchedPosition.coords.latitude, lng: watchedPosition.coords.longitude })
+      // trace.value.trace.push(counter); //FOR fAkiNg
+      // counter++; //fOr fakiNg
+      _TRACE.push([watchedPosition.coords.longitude, watchedPosition.coords.latitude])
+      let o = {
+        "type": "FeatureCollection",
+        "features": [{
+          "type": "Feature",
+          "properties": {},
+          "geometry": {
+            "type": "LineString",
+            "coordinates": _TRACE
+          }
+        }]
+      };
+      _TRACEACTIVEGEOM.value = o;
+
+      let c = _TRACE.at(-1);
+      !_PAUSED.value && (_CENTER.value = `${c[0]},${c[1]}`)
+
+    }), (err) => {
+      _META.value.log.push({ timeout: 20, klass: 'has-text-error', msg: `nav.geo failed: ${err.message} (${err.code})`, sender: "if.geolocation.error" })
+    }) //.watchposition
+
   _SETROUTE();
 })
 
@@ -243,12 +278,8 @@ const _FAKETRACE = () => {
     [-71.14462852478027,
       42.3346919724542
     ],
-    [-71.15076541900635,
-      42.33224917476978
-    ],
-    [-71.15029335021973,
-      42.33957728318422
-    ],
+    [-71.16450, 42.33824],
+    [-71.15988, 42.34008],
     [-71.14153861999512,
       42.3397676122846
     ],
@@ -335,9 +366,9 @@ const _FAKETRACE = () => {
 const colors = { bg: "green" };
 
 const _REGIONAUDIT = async() => {
-  console.log(`n regionaud: we have ${_CENTERLINES[PROPS.region].length} centerlines for ${PROPS.region}`)
-    // If thE CuRrenT reGIoN HAs no cENTErLineS, FeTCH EM
-    // if (!_CENTERLINES[PROPS.region]) { // let response = await fetch("https://api.npms.io/v2/search?q=vue"); // _CENTERLINES[PROPS.region] = await response.json(); // }
+  // console.log(`n regionaud: we have ${_CENTERLINES[PROPS.region].length} centerlines for ${PROPS.region}`)
+  // If thE CuRrenT reGIoN HAs no cENTErLineS, FeTCH EM
+  // if (!_CENTERLINES[PROPS.region]) { // let response = await fetch("https://api.npms.io/v2/search?q=vue"); // _CENTERLINES[PROPS.region] = await response.json(); // }
 }
 const _SETBASEMAP = (b) => {
   _BASEMAP.value = b.handle
@@ -365,7 +396,7 @@ const _BBOX2BOUNDS = () => {
   return bbb;
 }
 const _SETBBOX = (b) => {
-  console.log("b in setbbox", b);
+  // console.log("b in setbbox", b);
   _BBOX.value = b.toBBoxString()
 }
 const _NOTDONE = (regionOb) => {
