@@ -1,30 +1,94 @@
 <template>
-  <div class="container">
-    <a href="" @click.prevent="_PAUSED=!_PAUSED">
-      <div v-if="_PAUSED">🛑</div>
-      <div v-else>🟢</div>
-    </a>
-    <div v-if="_LOADING">⏰</div>
-    <div v-else>🩲</div>
-    <div v-for="_region in _REGIONS" :class="_region.handle==region?'font-black':''"><a href="" @click.prevent="region=_region.handle">{{_region.handle}}</a></div>
-    <hr/>
-    <!-- <a @click.prevent="_REGIONAUDIT()" class="underline" href="">regnaudit</a> 🦋 -->
-    <!-- <a class="underline" href="http://localhost:3000/brighton/$/ocm/-92,42/12">http://localhost:3000/brighton/$/ocm/-91.55,41.6,-91.45,41.9/12</a> 🦋
-    <a class="underline" href="http://localhost:3000/brighton/$/ocm/-92,42/5">http://localhost:3000/brighton/$/ocm/-91.55,41.6,-91.45,41.9/5</a> -->
-    <!-- <a @click.prevent="_FAKETRACE" class="underline" href="">faketrxc</a> -->
-    <a @click.prevent="_FAKETRACE" class="underline" href="">faketrxc</a>
-    <ol>
-      <li>crds: {{_TRACE.length}}</li>
-      <!-- <li>trkv: {{_TRACEARKIVE().length}}</li> -->
-      <!-- <li>trac: {{_TRACEACTIVE().length}} (mstrcnt:{{_TRACEACTIVE()[0]}})</li>
+  <div id="template-root p-0 m-0 h-12">
+    <!-- component -->
+    <!-- follow me on twitter @asad_codes -->
+    <div id="header" class="flex flex-wrap place-items-center">
+      <section class="relative mx-auto">
+        <!-- navbar -->
+        <nav id="app-nav" class="flex justify-between text-white w-screen">
+          <div class="px-5 xl:px-12 py-6 flex w-full items-center">
+            <a class="text-3xl font-bold font-heading" href="#">
+              ebl-2.1.2
+            </a>
+            <!-- Nav Links -->
+            <ul class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12 ">
+              <!-- <li v-for="_region in _REGIONS"><a @click.prevent="region=_region.handle" :class="['nav-button',_region.handle==region?'nav-button-chosen':'']" href="#">{{_region.label}}</a></li> -->
+              <!-- <li><a @click.prevent="_FAKETRACE" class="underline" href="">faketrxc</a></li> -->
+              <!-- <li><a class="hover:text-gray-200" href="#">Catagory</a></li>
+<li><a class="hover:text-gray-200" href="#">Collections</a></li>
+<li><a class="hover:text-gray-200" href="#">Contact Us</a></li>
  -->
-    </ol>
-    <!-- <ol>
-      <li v-for="coord in _TRACEACTIVEGEOM.features[0].geometry.coordinates">{{coord}}</li>
-    </ol> -->
-    <Map @update-center="_CENTERED" @update-zoom="_SETZOOM" :center="_CENTERME()" :basemaps="_BASEMAPS" :subs="Subs" :basemap="_BASEMAP" :zoom="_ZOOM" :brookline="Brookline" :brighton="Brighton" :brooklinePoly="BrooklinePoly" :brightonPoly="BrightonPoly" :lastActive="_TRACE[_TRACE.length-1]" :traceActive="_TRACEACTIVEGEOM" :styles="_STYLES" :region="region" />
+            </ul>
+            <!-- Header Icons -->
+            <div class="hidden xl:flex items-center space-x-5 items-center">
+              <a @click.prevent="region=_region.handle" :class="['nav-button',_region.handle==region?'nav-button-chosen':'','mr-8']" href="#" v-for="_region in _REGIONS">{{_region.label}}</a>
+              <!-- <a class="hover:text-gray-200" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                </svg>
+              </a>
+              <a class="flex items-center hover:text-gray-200" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                <span class="flex absolute -mt-5 ml-4">
+              <span class="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-pink-400 opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-3 w-3 bg-pink-500">
+                </span>
+                </span>
+              </a>
+              <a class="flex items-center hover:text-gray-200" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </a> -->
+            </div>
+          </div>
+          <!-- Responsive navbar -->
+          <a @click.prevent="_FAKETRACE" class="nav-button underline mr-7 pr-4 border-r-2" href="">FT</a>
+          <a @click.prevent="region=_region.handle" :class="['nav-button',_region.handle==region?'nav-button-chosen':'','mr-4']" href="#" v-for="_region in _REGIONS">{{_region.label}}</a>
+          <p>
+            <PauseIcon @click.prevent="_PAUSED=!_PAUSED" v-if="!_PAUSED" class="h-7 w-7 nav-button" />
+            <PlayIcon @click.prevent="_PAUSED=!_PAUSED" v-else class="h-7 w-7 nav-button" />
+          </p>
+          <!-- <a class="xl:hidden flex mr-6 items-center" href="#">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+            </svg>
+            <span class="flex absolute -mt-5 ml-4">
+          <span class="animate-ping absolute inline-flex h-3 w-3 rounded-full bg-pink-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-3 w-3 bg-pink-500">
+          </span>
+            </span>
+          </a>
+          <a class="navbar-burger self-center mr-12 xl:hidden" href="#">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </a> -->
+        </nav>
+      </section>
+    </div>
+    <!-- -------------------------------------------------------------------------------------------------------------------------------
+    <div class="fixed z-10 bg-opacity-50 float-right">
+      <a href="" @click.prevent="_PAUSED=!_PAUSED">
+        <div v-if="_PAUSED">🛑</div>
+        <div v-else>🟢</div>
+      </a>
+      <div v-if="_LOADING">⏰</div>
+      <div v-else>🩲</div>
+      <div v-for="_region in _REGIONS" :class="_region.handle==region?'font-black':''"><a href="" @click.prevent="region=_region.handle">{{_region.handle}}</a></div>
+      <hr/>
+      <a @click.prevent="_FAKETRACE" class="underline" href="">faketrxc</a>
+      <ol>
+        <li>crds: {{_TRACE.length}}</li>
+      </ol>
+    </div>
+ -->
     <Footer @update-basemap="_SETBASEMAP" :basemaps="_BASEMAPS" :basemap="_BASEMAP" />
+    <Map @update-center="_CENTERED" @update-zoom="_SETZOOM" :center="_CENTERME()" :basemaps="_BASEMAPS" :subs="Subs" :basemap="_BASEMAP" :zoom="_ZOOM" :brookline="Brookline" :brighton="Brighton" :brooklinePoly="BrooklinePoly" :brightonPoly="BrightonPoly" :lastActive="_TRACE[_TRACE.length-1]" :traceActive="_TRACEACTIVEGEOM" :styles="_STYLES" :region="region" />
   </div>
+  <!-- root -->
 </template>
 
 <script setup>
@@ -38,6 +102,8 @@ import Brighton from '../assets/join_brighton.json'
 import BrooklinePoly from '../assets/brooklinePoly.json'
 import BrightonPoly from '../assets/brightonPoly.json'
 import Subs from '../assets/subs.json'
+import { PauseIcon } from '@heroicons/vue/solid'
+import { PlayIcon } from '@heroicons/vue/solid'
 
 const ROUTE = useRoute(),
   ROUTER = useRouter(),
@@ -92,17 +158,19 @@ const _CREDITS = [
   "bicycling by Samy Menai from the Noun Project"
 ]
 
-const _REGIONS = [{ label: "Brighton", handle: "brighton", abbrev: "brhgtn" }, { label: "Brookline", handle: "brookline", abbrev: "brklin" }]
+const _REGIONS = [{ label: "Bri", handle: "brighton", abbrev: "brhgtn" }, { label: "Bro", handle: "brookline", abbrev: "brklin" }]
 const _CARDS = ['$', 'dashboard']
 const _BASEMAPS = [{
   name: 'OpenStreetMap',
   handle: "osm",
   attribution: '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
   urii: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  thmb: "https://c.tile.openstreetmap.org/18/79279/96968.png",
 }, {
   name: 'OpenTopoMap',
   handle: "opentopo",
   urii: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
+  thmb: "https://a.tile.opentopomap.org/13/2478/3030.png",
   attribution: 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)',
 }, {
   name: "Stamen Toner Lite",
@@ -264,6 +332,8 @@ const _FAKETRACE = () => {
 
 }
 
+const colors = { bg: "green" };
+
 const _REGIONAUDIT = async() => {
   console.log(`n regionaud: we have ${_CENTERLINES[PROPS.region].length} centerlines for ${PROPS.region}`)
     // If thE CuRrenT reGIoN HAs no cENTErLineS, FeTCH EM
@@ -314,14 +384,46 @@ const _CENTERME = () => {
   return clsw
 }
 
-const _STYLES = {
-  regionBoundary: { color: `hsla(202, 66%, 39%, .3)`, fill: false, opacity: 1, width: 3, weight: 8 },
-  centerlinesDone: { color: `rgba(0, 4, 4, 0)`, fill: false, opacity: 0, width: 3, weight: 8 },
-  centerlinesNott: { color: `rgba(125, 120, 122, 0)`, fill: false, opacity: .9, width: 12, weight: 8 },
-  traceActive: { color: `#2274A5`, fill: false, dashArray: "2 5 10 ", opacity: .9, width: 3, weight: 8 },
-  traceArkive: { color: `rgba(125, 20, 22, 1)`, fill: false, opacity: .5, width: 2, weight: 8 },
-  buffer: { color: `rgba(115, 55, 212, 0)`, fill: true, opacity: 0, width: 1, weight: 1 },
-  candidates: { color: `rgb(236, 88, 0)`, fill: false, opacity: 1, width: 4, weight: 4 }
 
+/* CSS HSL https://coolors.co/fffbfe-2274a5-632b30-4b5320-ec5800 */
+
+
+
+
+
+
+const _STYLES = {
+  regionBoundary: { color: `hsla(202, 66%, 39%, 1)`, fill: false, width: 3, weight: 8 },
+  centerlinesDone: { color: `rgba(0, 4, 4, 0)`, fill: false, width: 3, weight: 8 },
+  centerlinesNott: { color: `rgba(125, 120, 122, 0)`, fill: false, width: 12, weight: 8 },
+  traceActive: { color: "hsla(202, 66% , 39% , 1)", fill: false, dashArray: "2 5 10 ", opacity: 1, width: 3, weight: 8 },
+  traceArkive: { color: `rgba(125, 20, 22, 1)`, fill: false, width: 2, weight: 8 },
+  buffer: { color: `rgba(115, 55, 212, 1)`, fill: true, width: 1, weight: 1 },
+  candidates: { color: "hsla(22, 100% , 46% )", fill: false, opacity: 1, width: 4, weight: 4 },
+  white: "hsla(315,100%,99%,1)",
+  whiteoff: "rgba(245,244,253,.5)",
+  red: "hsla(355,39%,28%,1)",
+  green: "hsla(69,44%,23%,1)",
+  warning: "hsla(52, 75%, 70%, 1)"
 }
 </script>
+
+<style>
+@import url("https://overpass-30e2.kxcdn.com/overpass.css");
+body {
+  font-family: 'overpass';
+  font-weight: 800;
+}
+
+#app-nav {
+  background-color: v-bind(_STYLES.green);
+}
+
+.nav-button:hover {
+  color: v-bind(_STYLES.whiteoff);
+}
+
+.nav-button-chosen {
+  color: v-bind(_STYLES.regionBoundary.color);
+}
+</style>

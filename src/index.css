@@ -1,15 +1,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-
-/* CSS HSL https://coolors.co/fffbfe-2274a5-632b30-4b5320-ec5800 */
---snow: hsla(315, 100%, 99%, 1);
---star-command-blue: hsla(202, 66%, 39%, 1);
---wine: hsla(355, 39%, 28%, 1);
---army-green: hsla(69, 44%, 23%, 1);
---persimmon: hsla(22, 100%, 46%, 1);
-
-#hh{
-	color: var(--wine, red);
-}

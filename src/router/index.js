@@ -3,6 +3,7 @@ import {
     createWebHistory
 } from 'vue-router'
 import Home from '/src/components/Home.vue'
+import Dashboard from '/src/components/Dashboard.vue'
 
 const rfunc = (route) => {
     return {
@@ -18,6 +19,11 @@ const routes = [{
     path: '/:region?/:card?/:basemap?/:center?/:zoom?',
     name: 'Home',
     component: Home,
+    props: rfunc
+}, {
+    path: '/admin/:region?/:card?/:basemap?/:center?/:zoom?',
+    name: 'Dashboard',
+    component: Dashboard,
     props: rfunc
 }]
 
