@@ -39,6 +39,12 @@
           </label>
           <label :class="['text-gray-400','font-thin','text-sm text-center','relative -inset-y-2',_bearings.nw.length<=3 && _bearings.nw.length>0?'lowStreetCountAlert':'']">{{_bearings.nw.length}}</label>
         </div>
+        <div class="relative flex-1 flex flex-col gap-1 pt-2 items-center">
+          <p class="text-xl">{{traceActive.features[0].geometry.coordinates.length}}</p>
+        </div>
+        <div class="relative flex-1 flex flex-col gap-1 pt-3 items-center">
+          <p v-if="weather.feels_like" class="text-sm">{{Math.round(weather.feels_like)}}°</p>
+        </div>
       </div>
     </div>
     <l-map style="height: 888px;" :center="center" :zoom="parseInt(zoom)" @update:center="$emit('update-center',$event)" @update:zoom="$emit('update-zoom',$event)" @update:bounds="$emit('update-bounds',$event)">
@@ -134,6 +140,7 @@ const ROUTE = useRoute(),
     zoom: String,
     center: Object,
     brookline: Object,
+    weather: Object,
     brooklinePoly: Object,
     brighton: Object,
     brightonPoly: Object,

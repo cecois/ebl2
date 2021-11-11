@@ -1,0 +1,12 @@
+{
+	"name": "everybline",
+	"short_name": "EBL",
+	"icons": [
+		{
+			"src": "static/apple-touch-icon.png",
+			"sizes": "64x128"
+		}],
+	"background_color": "#fff",
+	"theme_color": "#4b5320",
+	"display": "fullscreen"
+}

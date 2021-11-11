@@ -64,30 +64,97 @@
       <div class="main-content flex-1 bg-gray-100 mt-12 md:mt-2 pb-24 md:pb-5">
         <div class="bg-gray-800 pt-3">
           <div class="bg-gradient-to-r from-blue-900 to-gray-800 p-4 shadow text-2xl text-white">
-            <!-- <h3 class="font-bold pl-2">{{region}}</h3> -->
-            <h3 v-for="_region in CONFIG._REGIONS.filter(r=>r.handle==region)" class="font-bold pl-2">{{_region.handle}}</h3>
+            <h3 class="font-bold pl-2">{{region
+}}</h3>
           </div>
         </div>
         <div class="flex flex-wrap">
-          <div class="grid grid-cols-1 lg:grid-cols-4 gap-4 lg:gap-8 m-5">
-            <div class="border p-4 text-center col-span-1 lg:col-span-2">
-              <div v-for="_region in CONFIG._REGIONS.filter(r=>r.handle==region)" class="grid grid-cols-1 gap-4">
-                <div class="border">totallength: {{Math.round(META[_region.handle].totalLength )}}km
+          <!-- 🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏 -->
+          <div v-if="region=='brighton'" class="w-full md:w-1/2 xl:w-1/3 p-6">
+            <!--Metric Card-->
+            <div class="bg-gradient-to-b from-gray-200 to-gray-300 border-b-4 border-green-600 rounded-sm shadow-xl p-5">
+              <div class="flex flex-row items-center">
+                <div class="flex-shrink pr-4">
+                  <div class="rounded-full p-5 bg-green-600"><i class="fa fa-wallet fa-2x fa-inverse"></i></div>
                 </div>
-                <!-- ... -->
-                <div class="border">donecount:{{META[_region.handle].doneCount}}</div>
-                <div class="border">donecount:{{META[_region.handle].notDoneCount}}</div>
-                <div class="border">notDonelength:{{META[_region.handle].notDoneLength}}</div>
-                <div class="border">
-                  <span v-for="uniq in META[_region.handle].aheadUnique">{{uniq}} • </span>
+                <div class="flex-1 text-right md:text-center">
+                  <h5 class="font-bold uppercase text-gray-600">Total Revenue Brighton</h5>
+                  <h3 class="font-bold text-3xl">$229 <span class="text-green-500"><i class="fas fa-caret-up"></i></span></h3>
                 </div>
               </div>
             </div>
-            <div class="border p-4 text-center">One of three columns gets long?</div>
-            <div class="border p-4 text-center">One of three columns</div>
+            <!--/Metric Card-->
+          </div>
+          <!-- 🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏 -->
+          <div v-if="region=='brookline'" class="w-full md:w-1/2 xl:w-1/3 p-6">
+            <!--Metric Card-->
+            <div class="bg-gradient-to-b from-gray-200 to-gray-300 border-b-4 border-green-600 rounded-sm shadow-xl p-5">
+              <div class="flex flex-row items-center">
+                <div class="flex-shrink pr-4">
+                  <div class="rounded-full p-5 bg-green-600"><i class="fa fa-wallet fa-2x fa-inverse"></i></div>
+                </div>
+                <div class="flex-1 text-right md:text-center">
+                  <h5 class="font-bold uppercase text-gray-600">Total Revenue Brookline</h5>
+                  <h3 class="font-bold text-3xl">$3249 <span class="text-green-500"><i class="fas fa-caret-up"></i></span></h3>
+                </div>
+              </div>
+            </div>
+            <!--/Metric Card-->
+          </div>
+          <!-- 🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏 -->
+          <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+            <!--Metric Card-->
+            <div class="bg-gradient-to-b from-pink-200 to-pink-100 border-b-4 border-pink-500 rounded-lg shadow-xl p-5">
+              <div class="flex flex-row items-center">
+                <div class="flex-shrink pr-4">
+                  <div class="rounded-full p-5 bg-pink-600"><i class="fas fa-users fa-2x fa-inverse"></i></div>
+                </div>
+                <div class="flex-1 text-right md:text-center">
+                  <h5 class="font-bold uppercase text-gray-600">Total Users</h5>
+                  <h3 class="font-bold text-3xl">249
+                  <br/>
+                  <br/>
+                  <br/>
+                  <br/>
+                  <br/>
+                  <br/>
+                  Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                  tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                  quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                  consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                  cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                  proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  <br/>
+                  <span class="text-pink-500"><i class="fas fa-exchange-alt"></i></span></h3>
+                </div>
+              </div>
+            </div>
+            <!--/Metric Card-->
+          </div>
+          <!-- 🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏🃏 -->
+          <div class="w-full md:w-1/2 xl:w-1/3 p-6">
+            <!--Metric Card-->
+            <div class="bg-gradient-to-b from-pink-200 to-pink-100 border-b-4 border-pink-500 rounded-lg shadow-xl p-5">
+              <div class="flex flex-row items-center">
+                <div class="flex-shrink pr-4">
+                  <div class="rounded-full p-5 bg-pink-600"><i class="fas fa-users fa-2x fa-inverse"></i></div>
+                </div>
+                <div class="flex-1 text-right md:text-center">
+                  <h5 class="font-bold uppercase text-gray-600">Specific Ride Here</h5>
+                  <h3 class="font-bold text-3xl">EBL #999
+                  <br/>
+                  <br/>
+                  <br/>
+                  cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                  proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                  <br/>
+                  <span class="text-pink-500"><i class="fas fa-exchange-alt"></i></span></h3>
+                </div>
+              </div>
+            </div>
+            <!--/Metric Card-->
           </div>
         </div>
-        <!-- /dashboard area -->
       </div>
     </div>
   </div>
@@ -97,14 +164,9 @@
 <script setup>
 import CONFIG from '../CONFIG.json'
 import { ref, reactive, onMounted, watch } from 'vue'
-import * as turf from '@turf/turf'
 import { useRoute, useRouter } from 'vue-router'
-import Brookline from '../assets/join_brookline.json'
-import Brighton from '../assets/join_brighton.json'
 
-
-const META = {},
-  ROUTE = useRoute(),
+const ROUTE = useRoute(),
   ROUTER = useRouter(),
   PROPS = defineProps({ region: String, card: String, basemap: String, center: String, zoom: String })
 
@@ -115,69 +177,6 @@ const META = {},
  / / / / / /  __/ /_/ / / / /_/ / /_/ (__  )
 /_/ /_/ /_/\___/\__/_/ /_/\____/\__,_/____/
 */
-
-const _pluck = (arr, key) => arr.map(o => o.properties[key])
-const _unique = (value, index, self) => self.indexOf(value) === index;
-
-const setRegionMeta = () => {
-
-  CONFIG._REGIONS.forEach(r => {
-
-    let doneAudit = DONEAUDIT(r.handle);
-    META[r.handle] = {
-      totalLength: TOTALLENGTH(r.handle),
-      doneCount: (doneAudit.totalCount - doneAudit.notDones.features.length),
-      notDoneCount: doneAudit.notDones.features.length,
-      notDoneLength: turf.length(doneAudit.notDones, { units: 'kilometers' }),
-      aheadUnique: _pluck(doneAudit.notDones.features, 'name').filter(_unique)
-    }
-  })
-
-  /*META.brookline={
-    total:TOTALLENGTH('brookline'),
-    done: FILTERBYDONE('brookline').features.length,
-    ahead:FILTERBYAHEAD('brookline').features.map(o => o[key])
-  }
-  META.brighton={
-    total:TOTALLENGTH('brighton'),
-    done: FILTERBYDONE('brighton').features.length,
-    ahead:FILTERBYAHEAD('brighton').features.map(o => o[key])
-  }*/
-
-}
-
-const DONEAUDIT = (r) => {
-    let totalCount = null;
-    let notDones = {
-      "type": "FeatureCollection",
-      "features": null
-    };
-    switch (r) {
-      case 'brookline':
-        totalCount = Brookline.features.length
-        notDones.features = Brookline.features.filter(fea => fea.properties.done !== 'done')
-        break;
-      case 'brighton':
-        totalCount = Brighton.features.length
-        notDones.features = Brighton.features.filter(fea => fea.properties.done !== 'done')
-        break;
-    }
-    return { notDones: notDones, totalCount: totalCount }
-  } //DONEAUDIT
-const TOTALLENGTH = (r) => {
-
-    let length = 0;
-
-    switch (r) {
-      case 'brookline':
-        length = turf.length(Brookline, { units: 'kilometers' })
-        break;
-      case 'brighton':
-        length = turf.length(Brighton, { units: 'kilometers' })
-        break;
-    }
-    return length;
-  } //tOtaLLenGTH
 
 const _SETROUTE = () => {
   ROUTER.push({
@@ -199,7 +198,6 @@ const _SETROUTE = () => {
   \__/   '.__.'_/ '.__.' \______.'
 */
 onMounted(() => {
-  setRegionMeta();
   _SETROUTE();
 })
 watch(() => [PROPS.region], (newp, oldp) => {

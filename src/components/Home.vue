@@ -13,7 +13,8 @@
             <!-- Nav Links -->
             <ul class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12 ">
               <!-- <li v-for="_region in _REGIONS"><a @click.prevent="region=_region.handle" :class="['nav-button',_region.handle==region?'nav-button-chosen':'']" href="#">{{_region.label}}</a></li> -->
-              <!-- <li><a @click.prevent="_FAKETRACE" class="underline" href="">faketrxc</a></li> -->
+              <!-- <li><a @click.prevent="_GETWEATHER" class="underline" href="">WTHR</a></li> -->
+              <li><a @click.prevent="_FAKETRACE" class="underline" href="">faketrxc</a></li>
               <!-- <li><a class="hover:text-gray-200" href="#">Catagory</a></li>
 <li><a class="hover:text-gray-200" href="#">Collections</a></li>
 <li><a class="hover:text-gray-200" href="#">Contact Us</a></li>
@@ -51,7 +52,6 @@
             <PauseIcon @click.prevent="_PAUSED=!_PAUSED" v-if="!_PAUSED" class="h-7 w-7 nav-button" />
             <PlayIcon @click.prevent="_PAUSED=!_PAUSED" v-else class="h-7 w-7 nav-button" />
           </p>
-          <p>{{_TRACE.length}}</p>
           <!-- <a class="xl:hidden flex mr-6 items-center" href="#">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -86,13 +86,15 @@
       </ol>
     </div>
  -->
-    <Footer @update-basemap="_SETBASEMAP" :basemaps="_BASEMAPS" :basemap="_BASEMAP" />
-    <Map @update-center="_CENTERED" @update-zoom="_SETZOOM" :center="_CENTERME()" :basemaps="_BASEMAPS" :subs="Subs" :basemap="_BASEMAP" :zoom="_ZOOM" :brookline="Brookline" :brighton="Brighton" :brooklinePoly="BrooklinePoly" :brightonPoly="BrightonPoly" :lastActive="_TRACE[_TRACE.length-1]" :traceActive="_TRACEACTIVEGEOM" :styles="_STYLES" :region="region" />
+    <Footer @update-basemap="_SETBASEMAP" :basemaps="CONFIG._BASEMAPS
+" :basemap="_BASEMAP" />
+    <Map @update-center="_CENTERED" @update-zoom="_SETZOOM" :center="_CENTERME()" :basemaps="CONFIG._BASEMAPS" :subs="_SUBS" :basemap="_BASEMAP" :zoom="_ZOOM" :brookline="Brookline" :brighton="Brighton" :brooklinePoly="BrooklinePoly" :brightonPoly="BrightonPoly" :lastActive="_TRACE.at(-1)" :traceActive="_TRACEACTIVEGEOM" :styles="_STYLES" :region="region" :weather="_WEATHER.main" />
   </div>
   <!-- root -->
 </template>
 
 <script setup>
+import CONFIG from '../CONFIG.json'
 import { ref, reactive, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { latLngBounds, latLng } from 'leaflet'
@@ -102,12 +104,14 @@ import Brookline from '../assets/join_brookline.json'
 import Brighton from '../assets/join_brighton.json'
 import BrooklinePoly from '../assets/brooklinePoly.json'
 import BrightonPoly from '../assets/brightonPoly.json'
-import Subs from '../assets/subs.json'
 import { PauseIcon } from '@heroicons/vue/solid'
 import { PlayIcon } from '@heroicons/vue/solid'
 
 const ROUTE = useRoute(),
   ROUTER = useRouter(),
+  // _CONFIG = { geoloc: false },
+  _SUBS = CONFIG._SUBS,
+  _STYLES = CONFIG._STYLES,
   _LOADING = ref(false),
   PROPS = defineProps({ region: String, card: String, basemap: String, center: String, zoom: String }),
   //A coupLe WE goNNA PurTuRb coNSTAntly
@@ -156,73 +160,50 @@ const ROUTE = useRoute(),
     }]
   })
 
+const _WEATHER = reactive({
+  "coord": {
+    "lon": null,
+    "lat": null
+  },
+  "weather": [],
+  "base": null,
+  "main": {
+    "temp": null,
+    "feels_like": null,
+    "temp_min": null,
+    "temp_max": null,
+    "pressure": null,
+    "humidity": null,
+  },
+  "visibility": null,
+  "wind": {
+    "speed": null,
+    "deg": null,
+    "gust": null
+  },
+  "clouds": {
+    "all": null
+  },
+  "dt": null,
+  "sys": {
+    "type": null,
+    "id": null,
+    "country": null,
+    "sunrise": null,
+    "sunset": null
+  },
+  "timezone": null,
+  "id": null,
+  "name": null,
+  "cod": null
+})
+
 const _CREDITS = [
   "bicycling by Samy Menai from the Noun Project"
 ]
 
-const _REGIONS = [{ label: "Bri", handle: "brighton", abbrev: "brhgtn" }, { label: "Bro", handle: "brookline", abbrev: "brklin" }]
+const _REGIONS = CONFIG._REGIONS
 const _CARDS = ['$', 'dashboard']
-const _BASEMAPS = [{
-  name: 'OpenStreetMap',
-  handle: "osm",
-  attribution: '&copy; <a target="_blank" href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-  urii: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  thmb: "https://c.tile.openstreetmap.org/18/79279/96968.png",
-}, {
-  name: 'OpenTopoMap',
-  handle: "opentopo",
-  urii: 'https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',
-  thmb: "https://a.tile.opentopomap.org/13/2478/3030.png",
-  attribution: 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)',
-}, {
-  name: "Stamen Toner Lite",
-  handle: "stamen_toner_lite",
-  urii: "https://{s}.tile.stamen.com/toner-lite/{z}/{x}/{y}@2x.png",
-  thmb: "https://c.tile.stamen.com/toner-lite/18/79279/96968@2x.png",
-  hue: "light"
-}, {
-  name: "Google Hybrid",
-  handle: "google_hybrid",
-  urii: "https://mt3.google.com/vt/lyrs=y&x={x}&y={y}&z={z}",
-  thmb: "https://mt3.google.com/vt/lyrs=y&x=79279&y=96968&z=18",
-  hue: "dark"
-}, {
-  name: "OpenCycleMap",
-  handle: "ocm",
-  urii: "https://tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=4e07c12ddb92435fbaf5d077958a5f43",
-  thmb: "https://tile.thunderforest.com/cycle/18/79279/96968.png?apikey=4e07c12ddb92435fbaf5d077958a5f43",
-  hue: "dark"
-}, {
-  name: "Pioneer",
-  handle: "ocm_pioneer",
-  urii: "https://tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey=4e07c12ddb92435fbaf5d077958a5f43",
-  thmb: "https://tile.thunderforest.com/pioneer/18/79279/96968.png?apikey=4e07c12ddb92435fbaf5d077958a5f43",
-  hue: "light"
-}, {
-  name: "Mobile Atlas",
-  handle: "ocm_mobile",
-  urii: "https://tile.thunderforest.com/mobile-atlas/{z}/{x}/{y}.png?apikey=4e07c12ddb92435fbaf5d077958a5f43",
-  thmb: "https://tile.thunderforest.com/mobile-atlas/18/79279/96968.png?apikey=4e07c12ddb92435fbaf5d077958a5f43",
-  hue: "light"
-}, {
-  name: "Carto Positron",
-  handle: "carto_positron",
-  urii: "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
-  thmb: "https://cartodb-basemaps-c.global.ssl.fastly.net/light_all/18/79279/96968.png",
-  hue: "light"
-}, {
-  name: "Carto Dark Matter",
-  handle: "carto_darkmatter",
-  urii: "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png",
-  thmb: "https://cartodb-basemaps-c.global.ssl.fastly.net/dark_all/18/79279/96968.png",
-  hue: "light"
-}, {
-  name: "Spinal Map",
-  handle: "ocm_spinal",
-  urii: "https://tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png?apikey=4e07c12ddb92435fbaf5d077958a5f43",
-  thmb: "https://tile.thunderforest.com/spinal-map/18/79279/96968.png?apikey=4e07c12ddb92435fbaf5d077958a5f43",
-  hue: "dark"
-}]
 
 watch(() => [PROPS.region, PROPS.card, _ZOOM.value, _CENTER.value, _BASEMAP.value], (newp, oldp) => {
   // _REGIONAUDIT();
@@ -231,40 +212,52 @@ watch(() => [PROPS.region, PROPS.card, _ZOOM.value, _CENTER.value, _BASEMAP.valu
 
 onMounted(() => {
 
-  // if ('geolocation' in navigator) {
-  navigator.geolocation.watchPosition((watchedPosition => {
+  if (CONFIG._GEOLOC) {
+    navigator.geolocation.watchPosition((watchedPosition => {
 
-      // rEmovE olDEST fRom tRACE if tHere ArE EnoUgH
-      // let oldest = trace.value.trace.length >= 10 ? trace.value.trace.shift() : null
-      // add IT To THE ArcHIvE
-      // oldest && trace.value.archive.push(oldest)
-      // PUT tHE NEW ONE in The adtIVe TrACE
-      // trace.value.trace.push({ lat: watchedPosition.coords.latitude, lng: watchedPosition.coords.longitude })
-      // trace.value.trace.push(counter); //FOR fAkiNg
-      // counter++; //fOr fakiNg
-      _TRACE.push([watchedPosition.coords.longitude, watchedPosition.coords.latitude])
-      let o = {
-        "type": "FeatureCollection",
-        "features": [{
-          "type": "Feature",
-          "properties": {},
-          "geometry": {
-            "type": "LineString",
-            "coordinates": _TRACE
-          }
-        }]
-      };
-      _TRACEACTIVEGEOM.value = o;
+        _TRACE.push([watchedPosition.coords.longitude, watchedPosition.coords.latitude])
+        let o = {
+          "type": "FeatureCollection",
+          "features": [{
+            "type": "Feature",
+            "properties": {},
+            "geometry": {
+              "type": "LineString",
+              "coordinates": _TRACE
+            }
+          }]
+        };
 
-      let c = _TRACE.at(-1);
-      !_PAUSED.value && (_CENTER.value = `${c[0]},${c[1]}`)
+        let zoomer =
 
-    }), (err) => {
-      _META.value.log.push({ timeout: 20, klass: 'has-text-error', msg: `nav.geo failed: ${err.message} (${err.code})`, sender: "if.geolocation.error" })
-    }) //.watchposition
+          _TRACEACTIVEGEOM.value = o;
 
+        if (_TRACE.length % 25 === 0) { _GETWEATHER(); }
+
+        let c = _TRACE.at(-1);
+        !_PAUSED.value && (_CENTER.value = `${c[0]},${c[1]}`);
+        !_PAUSED.value && (_SETZOOM("18"))
+
+      }), (err) => {
+        _META.value.log.push({ timeout: 20, klass: 'has-text-error', msg: `nav.geo failed: ${err.message} (${err.code})`, sender: "if.geolocation.error" })
+      }) //.watchposition
+  }
+
+  _GETWEATHER();
   _SETROUTE();
 })
+
+const _GETWEATHER = async() => {
+
+  _WEATHER.main.feels_like = '⏱'
+
+  await fetch("https://api.openweathermap.org/data/2.5/weather?q=Boston,usa&APPID=0d9f83b0f1264e2355537aafcaa8a660&units=imperial", {
+      "method": "GET"
+    }).then(response => response.json())
+    .then(data => _WEATHER.main = data.main)
+
+}
+
 
 const _SPLIT = 5;
 const _TRACEARKIVESLICE = () => _TRACE.slice(0, (_TRACE.length - _SPLIT))
@@ -280,6 +273,7 @@ const _FAKETRACE = () => {
     ],
     [-71.16450, 42.33824],
     [-71.15988, 42.34008],
+    [-71.139317, 42.345716],
     [-71.14153861999512,
       42.3397676122846
     ],
@@ -354,10 +348,17 @@ const _FAKETRACE = () => {
       }
     }]
   };
+
   _TRACEACTIVEGEOM.value = o;
 
+
+
+  if (_TRACE.length % 25 === 0) { _GETWEATHER(); }
+
+
   let c = _TRACE.at(-1);
-  !_PAUSED.value && (_CENTER.value = `${c[0]},${c[1]}`)
+  !_PAUSED.value && (_CENTER.value = `${c[0]},${c[1]}`);
+  !_PAUSED.value && (_SETZOOM("18"))
 
   _COUNTER.value++
 
@@ -417,26 +418,6 @@ const _CENTERME = () => {
 
 
 /* CSS HSL https://coolors.co/fffbfe-2274a5-632b30-4b5320-ec5800 */
-
-
-
-
-
-
-const _STYLES = {
-  regionBoundary: { color: `hsla(202, 66%, 39%, 1)`, fill: false, width: 3, weight: 8 },
-  centerlinesDone: { color: `rgba(0, 4, 4, 0)`, fill: false, width: 3, weight: 8 },
-  centerlinesNott: { color: `rgba(125, 120, 122, 0)`, fill: false, width: 12, weight: 8 },
-  traceActive: { color: "hsla(202, 66% , 39% , 1)", fill: false, dashArray: "2 5 10 ", opacity: 1, width: 3, weight: 8 },
-  traceArkive: { color: `rgba(125, 20, 22, 1)`, fill: false, width: 2, weight: 8 },
-  buffer: { color: `rgba(115, 55, 212, 1)`, fill: true, width: 1, weight: 1 },
-  candidates: { color: "hsla(22, 100% , 46% )", fill: false, opacity: 1, width: 4, weight: 4 },
-  white: "hsla(315,100%,99%,1)",
-  whiteoff: "rgba(245,244,253,.5)",
-  red: "hsla(355,39%,28%,1)",
-  green: "hsla(69,44%,23%,1)",
-  warning: "hsla(52, 75%, 70%, 1)"
-}
 </script>
 
 <style>

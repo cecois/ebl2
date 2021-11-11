@@ -1,0 +1,208 @@
+{
+    "_STYLES": {
+        "regionBoundary": {
+            "color": "hsla(202, 66%, 39%, 1)",
+            "fill": false,
+            "width": 3,
+            "weight": 8
+        },
+        "centerlinesDone": {
+            "color": "rgba(0, 4, 4, 0)",
+            "fill": false,
+            "width": 3,
+            "weight": 8
+        },
+        "centerlinesNott": {
+            "color": "rgba(125, 120, 122, 0)",
+            "fill": false,
+            "width": 12,
+            "weight": 8
+        },
+        "traceActive": {
+            "color": "hsla(202, 66% , 39% , 1)",
+            "fill": false,
+            "dashArray": "2 5 10 ",
+            "opacity": 1,
+            "width": 3,
+            "weight": 8
+        },
+        "traceArkive": {
+            "color": "rgba(125, 20, 22, 1)",
+            "fill": false,
+            "width": 2,
+            "weight": 8
+        },
+        "buffer": {
+            "color": "rgba(115, 55, 212, 1)",
+            "fill": true,
+            "width": 1,
+            "weight": 1
+        },
+        "candidates": {
+            "color": "hsla(22, 100% , 46% )",
+            "fill": false,
+            "opacity": 1,
+            "width": 4,
+            "weight": 4
+        },
+        "white": "hsla(315,100%,99%,1)",
+        "whiteoff": "rgba(245,244,253,.5)",
+        "red": "hsla(355,39%,28%,1)",
+        "green": "hsla(69,44%,23%,1)",
+        "warning": "hsla(52, 75%, 70%, 1)"
+    },
+    "_BASEMAPS": [{
+        "name": "OpenStreetMap",
+        "handle": "osm",
+        "urii": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        "thmb": "https://c.tile.openstreetmap.org/18/79279/96968.png"
+    }, {
+        "name": "OpenTopoMap",
+        "handle": "opentopo",
+        "urii": "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
+        "thmb": "https://a.tile.opentopomap.org/13/2478/3030.png"
+    }, {
+        "name": "Stamen Toner Lite",
+        "handle": "stamen_toner_lite",
+        "urii": "http://{s}.tile.stamen.com/toner-lite/{z}/{x}/{y}@2x.png",
+        "thmb": "http://c.tile.stamen.com/toner-lite/18/79279/96968@2x.png",
+        "hue": "light"
+    }, {
+        "name": "Google Hybrid",
+        "handle": "google_hybrid",
+        "urii": "https://mt3.google.com/vt/lyrs=y&x={x}&y={y}&z={z}",
+        "thmb": "https://mt3.google.com/vt/lyrs=y&x=79279&y=96968&z=18",
+        "hue": "dark"
+    }, {
+        "name": "OpenCycleMap",
+        "handle": "ocm",
+        "urii": "https://tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=4e07c12ddb92435fbaf5d077958a5f43",
+        "thmb": "https://tile.thunderforest.com/cycle/18/79279/96968.png?apikey=4e07c12ddb92435fbaf5d077958a5f43",
+        "hue": "dark"
+    }, {
+        "name": "Pioneer",
+        "handle": "ocm_pioneer",
+        "urii": "https://tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey=4e07c12ddb92435fbaf5d077958a5f43",
+        "thmb": "https://tile.thunderforest.com/pioneer/18/79279/96968.png?apikey=4e07c12ddb92435fbaf5d077958a5f43",
+        "hue": "light"
+    }, {
+        "name": "Mobile Atlas",
+        "handle": "ocm_mobile",
+        "urii": "https://tile.thunderforest.com/mobile-atlas/{z}/{x}/{y}.png?apikey=4e07c12ddb92435fbaf5d077958a5f43",
+        "thmb": "https://tile.thunderforest.com/mobile-atlas/18/79279/96968.png?apikey=4e07c12ddb92435fbaf5d077958a5f43",
+        "hue": "light"
+    }, {
+        "name": "Carto Positron",
+        "handle": "carto_positron",
+        "urii": "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+        "thmb": "https://cartodb-basemaps-c.global.ssl.fastly.net/light_all/18/79279/96968.png",
+        "hue": "light"
+    }, {
+        "name": "Carto Dark Matter",
+        "handle": "carto_darkmatter",
+        "urii": "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png",
+        "thmb": "https://cartodb-basemaps-c.global.ssl.fastly.net/dark_all/18/79279/96968.png",
+        "hue": "light"
+    }, {
+        "name": "Spinal Map",
+        "handle": "ocm_spinal",
+        "urii": "https://tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png?apikey=4e07c12ddb92435fbaf5d077958a5f43",
+        "thmb": "https://tile.thunderforest.com/spinal-map/18/79279/96968.png?apikey=4e07c12ddb92435fbaf5d077958a5f43",
+        "hue": "dark"
+    }],
+    "_GEOLOC": false,
+    "_SUBS": [{
+        "og": "Aisle",
+        "re": "Asl"
+    }, {
+        "og": "Avenue",
+        "re": "Av"
+    }, {
+        "og": "Ave",
+        "re": "Av"
+    }, {
+        "og": "Parking",
+        "re": "Pkng"
+    }, {
+        "og": "Beechwood",
+        "re": "Bchwd"
+    }, {
+        "og": "Bikepath",
+        "re": "Pth"
+    }, {
+        "og": "Branch",
+        "re": "Brnch"
+    }, {
+        "og": "Circle",
+        "re": "Cir"
+    }, {
+        "og": "Connector",
+        "re": "Cnctr"
+    }, {
+        "og": "Court",
+        "re": "Ct"
+    }, {
+        "og": "Crescent",
+        "re": "Cres"
+    }, {
+        "og": "Crossway",
+        "re": "Cxwy"
+    }, {
+        "og": "Drive",
+        "re": "Dr"
+    }, {
+        "og": "Driveway",
+        "re": "Way"
+    }, {
+        "og": "Extension",
+        "re": "Ext"
+    }, {
+        "og": "Lane",
+        "re": "Ln"
+    }, {
+        "og": "Parkway",
+        "re": "Pkwy"
+    }, {
+        "og": "Path",
+        "re": "Pth"
+    }, {
+        "og": "Place",
+        "re": "Pl"
+    }, {
+        "og": "Road",
+        "re": "Rd"
+    }, {
+        "og": "Rotary",
+        "re": "Rtry"
+    }, {
+        "og": "Square",
+        "re": "Sq"
+    }, {
+        "og": "Street",
+        "re": "St"
+    }, {
+        "og": "Terrace",
+        "re": "Ter"
+    }, {
+        "og": "Trail",
+        "re": "Trl"
+    }, {
+        "og": "Turnpike",
+        "re": "Pike"
+    }, {
+        "og": "Vale",
+        "re": "Vl"
+    }, {
+        "og": "Way",
+        "re": "Way"
+    }],
+    "_REGIONS": [{
+        "label": "Bri",
+        "handle": "brighton",
+        "abbrev": "brhgtn"
+    }, {
+        "label": "Bro",
+        "handle": "brookline",
+        "abbrev": "brklin"
+    }]
+}
