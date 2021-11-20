@@ -14,6 +14,16 @@ const rfunc = (route) => {
         zoom: !route.params.zoom ? "13" : route.params.zoom
     }
 }
+const rfuncd = (route) => {
+    return {
+        region: !route.params.region ? 'brighton' : route.params.region,
+        collapsed: !route.params.collapsed ? true : route.params.collapsed,
+        trackiso: !route.params.trackiso ? '$' : route.params.trackiso,
+        basemap: !route.params.basemap ? 'carto_darkmatter' : route.params.basemap,
+        center: !route.params.center ? '-71.1354446411133,42.32504712815144' : route.params.center,
+        zoom: !route.params.zoom ? "13" : route.params.zoom
+    }
+}
 
 const routes = [{
     path: '/:region?/:card?/:basemap?/:center?/:zoom?',
@@ -21,10 +31,10 @@ const routes = [{
     component: Home,
     props: rfunc
 }, {
-    path: '/admin/:region?/:card?/:basemap?/:center?/:zoom?',
+    path: '/admin/:region?/:trackiso?/:collapsed?/:basemap?/:center?/:zoom?',
     name: 'Dashboard',
     component: Dashboard,
-    props: rfunc
+    props: rfuncd
 }]
 
 const router = createRouter({

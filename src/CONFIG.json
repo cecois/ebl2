@@ -6,17 +6,23 @@
             "width": 3,
             "weight": 8
         },
-        "centerlinesDone": {
-            "color": "rgba(0, 4, 4, 0)",
+        "centerlinesIso": {
+            "color": "rgba(255, 114, 114, 1)",
             "fill": false,
             "width": 3,
+            "weight": 3
+        },
+        "centerlinesDone": {
+            "color": "rgba(10, 114, 114, 0)",
+            "fill": false,
+            "width": 2,
             "weight": 8
         },
         "centerlinesNott": {
-            "color": "rgba(125, 120, 122, 0)",
+            "color": "rgba(125, 120, 122, 1)",
             "fill": false,
-            "width": 12,
-            "weight": 8
+            "width": 2,
+            "weight": 4
         },
         "traceActive": {
             "color": "hsla(202, 66% , 39% , 1)",

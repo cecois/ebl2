@@ -88,7 +88,8 @@
  -->
     <Footer @update-basemap="_SETBASEMAP" :basemaps="CONFIG._BASEMAPS
 " :basemap="_BASEMAP" />
-    <Map @update-center="_CENTERED" @update-zoom="_SETZOOM" :center="_CENTERME()" :basemaps="CONFIG._BASEMAPS" :subs="_SUBS" :basemap="_BASEMAP" :zoom="_ZOOM" :brookline="Brookline" :brighton="Brighton" :brooklinePoly="BrooklinePoly" :brightonPoly="BrightonPoly" :lastActive="_TRACE.at(-1)" :traceActive="_TRACEACTIVEGEOM" :styles="_STYLES" :region="region" :weather="_WEATHER.main" />
+    <!-- <Map @update-center="_CENTERED" @update-zoom="_SETZOOM" :center="_CENTERME()" :basemaps="CONFIG._BASEMAPS" :subs="_SUBS" :basemap="_BASEMAP" :zoom="_ZOOM" :brookline="Brookline" :brighton="Brighton" :brooklinePoly="BrooklinePoly" :brightonPoly="BrightonPoly" :lastActive="_TRACE.at(-1)" :traceActive="_TRACEACTIVEGEOM" :styles="_STYLES" :region="region" :weather="_WEATHER.main" /> -->
+    <Map @update-center="_CENTERED" :center="_CENTERME()" :basemaps="CONFIG._BASEMAPS" :subs="_SUBS" :basemap="_BASEMAP" :zoom="_ZOOM" :brookline="Brookline" :brighton="Brighton" :brooklinePoly="BrooklinePoly" :brightonPoly="BrightonPoly" :lastActive="_TRACE.at(-1)" :traceActive="_TRACEACTIVEGEOM" :styles="_STYLES" :region="region" :weather="_WEATHER.main" />
   </div>
   <!-- root -->
 </template>
@@ -205,10 +206,11 @@ const _CREDITS = [
 const _REGIONS = CONFIG._REGIONS
 const _CARDS = ['$', 'dashboard']
 
-watch(() => [PROPS.region, PROPS.card, _ZOOM.value, _CENTER.value, _BASEMAP.value], (newp, oldp) => {
+/*watch(() => [PROPS.region, PROPS.card, _ZOOM.value, _CENTER.value, _BASEMAP.value], (newp, oldp) => {
   // _REGIONAUDIT();
-  _SETROUTE();
-})
+  _SETROUTE
+();
+})*/
 
 onMounted(() => {
 
@@ -244,7 +246,7 @@ onMounted(() => {
   }
 
   _GETWEATHER();
-  _SETROUTE();
+  // _SETROUTE();
 })
 
 const _GETWEATHER = async() => {
@@ -381,11 +383,9 @@ const _SETROUTE = () => {
   ROUTER.push({
     title: "Home",
     params: {
-      region: PROPS.region,
-      card: PROPS.card,
-      basemap: _BASEMAP.value,
-      center: _CENTER.value,
-      zoom: _ZOOM.value
+      region: PROPS.region
+        /*, card: PROPS.card, basemap: _BASEMAP.value, center: _CENTER.value, zoom: _ZOOM.value
+         */
     }
   });
 }
@@ -411,7 +411,8 @@ const _CENTERED = (h) => {
   _CENTER.value = `${h.lng},${h.lat}`
 }
 const _CENTERME = () => {
-  let b = PROPS.center.split(',')
+  // let b = PROPS.center.split(',')
+  let b = _CENTER.value.split(',')
   let clsw = latLng(b[1], b[0])
   return clsw
 }

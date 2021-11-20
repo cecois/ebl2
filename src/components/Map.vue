@@ -65,7 +65,6 @@
           <img src="../assets/noun_Arrow_2167324.svg" :style="`transform: rotate(${_BEARING()}deg)`">
         </l-icon>
       </l-marker>
-      <div class="inset-x-0">w?</div>
     </l-map>
   </div>
   <!-- /root container div
