@@ -68,12 +68,6 @@
         "urii": "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
         "thmb": "https://a.tile.opentopomap.org/13/2478/3030.png"
     }, {
-        "name": "Stamen Toner Lite",
-        "handle": "stamen_toner_lite",
-        "urii": "http://{s}.tile.stamen.com/toner-lite/{z}/{x}/{y}@2x.png",
-        "thmb": "http://c.tile.stamen.com/toner-lite/18/79279/96968@2x.png",
-        "hue": "light"
-    }, {
         "name": "Google Hybrid",
         "handle": "google_hybrid",
         "urii": "https://mt3.google.com/vt/lyrs=y&x={x}&y={y}&z={z}",
