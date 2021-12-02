@@ -70,7 +70,7 @@
             <h3 v-for="_region in CONFIG._REGIONS.filter(r=>r.handle==region)" class="font-bold pl-2">{{_region.handle}}</h3>
           </div>
         </div>
-        <DashboardMap :trackisogeo="trackIsoGeo()" :trackiso="_TRACKISO" :join="getActiveJoin()" v-if="_COLLAPSED" :center="_CENTERME()" :zoom="_ZOOM" @update-center="_CENTERED" @update-zoom="_SETZOOM" :basemaps="CONFIG._BASEMAPS" :basemap="_BASEMAP" :styles="_STYLES" />
+        <DashboardMap @update-bounds="updateBounds" :bbox="PROPS.bbox" :trackisogeo="trackIsoGeo()" :trackiso="_TRACKISO" :join="getActiveJoin()" v-if="_COLLAPSED" :basemaps="CONFIG._BASEMAPS" :basemap="_BASEMAP" :styles="_STYLES" />
         <div v-if="!_COLLAPSED" class="flex flex-wrap">
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-2 lg:gap-8 m-5">
             <div class="border p-4 text-center col-span-1 lg:col-span-1">
@@ -115,16 +115,20 @@ import Brookline from '../assets/join_brookline.json'
 import Brighton from '../assets/join_brighton.json'
 
 
+
 const META = {},
-  PROPS = defineProps({ trackiso: String, region: String, basemap: String, center: String, collapsed: Boolean, zoom: String }),
+  PROPS = defineProps({ trackiso: String, region: String, basemap: String, collapsed: Boolean, bbox: String }),
   _COLLAPSED = PROPS.collapsed == '$' ? ref(false) : ref(true),
   _STYLES = CONFIG._STYLES,
   _BASEMAP = ref(PROPS.basemap),
-  _ZOOM = ref(PROPS.zoom),
+  // _ZOOM = ref(PROPS.zoom),
   _TRACKISO = PROPS.trackiso !== '$' ? ref(decodeURI(PROPS.trackiso)) : ref(false),
-  _CENTER = ref(PROPS.center ? PROPS.center : "-100,50"),
+  // _CENTER = ref(PROPS.center ? PROPS.center : "-100,50"),
   ROUTE = useRoute(),
   ROUTER = useRouter()
+
+// SOME We GonNA mUtAtE
+const _BBOX = ref(PROPS.bbox);
 
 
 /*                   __  __              __
@@ -139,6 +143,14 @@ const _unique = (value, index, self) => self.indexOf(value) === index;
 
 /*const currentRegionTracks = () => { let tracks = null; switch (PROPS.region) { case 'brookline': tracks = _pluck(Brookline.features, 'ride').filter(_unique) } //swiTcH return tracks } //CUrRENtReGiONTraCks
  */
+
+
+/*
+_northEast: Object { lat: 45.10066901851988, lng: -68.84582519531251 }
+_southWest: Object { lat: 42.92224052343343, lng: -72.09228515625001 }
+*/
+const updateBounds = (bs) => _BBOX.value = `${bs._southWest.lng},${bs._southWest.lat},${bs._northEast.lng},${bs._northEast.lat}` //UpDATEBOUndS - emitTED, PRoLly
+
 
 const trackIsoMeta = () => {
     let track = trackIsoGeo();
@@ -178,6 +190,7 @@ const getActiveJoin = () => {
     } //switch
     return join;
   } //gEtacTiVEjSoIn
+
 const _SETZOOM = (z) => {
     _ZOOM.value = z;
   }
@@ -288,8 +301,9 @@ const _SETROUTE = () => {
     params: {
       region: PROPS.region,
       basemap: _BASEMAP.value,
-      center: _CENTER.value,
-      zoom: _ZOOM.value,
+      // center: _CENTER.value,
+      // zoom: _ZOOM.value,
+      bbox: _BBOX.value,
       collapsed: _COLLAPSED.value ? '$$' : '$',
       trackiso: _TRACKISO ? encodeURI(_TRACKISO.value) : '$'
     }

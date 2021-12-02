@@ -7,7 +7,7 @@
 </template>
 
 <script setup>
-import { ref, defineProps, onMounted, watch } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 
 const PROPS = defineProps({ basemaps: Array, basemap: String })
 </script>

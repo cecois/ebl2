@@ -4,7 +4,7 @@
   <!-- <p>tctv.length: {{PROPS.traceActive.features[0].geometry.coordinates.length}}</p>
   <p>tctv.length: {{PROPS.traceActive[PROPS.traceActive.features[0].geometry.coordinates.length - 1]}}</p>
   <p>brng: {{_BEARING()}}</p> -->
-  <div id="map" class="h-55">
+  <div class="">
     <!-- <p>_bearings.sw: {{_bearings.sw.length}}:_bearings.se: {{_bearings.se.length}}:_bearings.ne: {{_bearings.ne.length}}:_bearings.nw: {{_bearings.nw.length}}</p> -->
     <div id="streetPlateParent">
       <div id="streetPlateContentWrapper" :class="['pt-0','pb-1',_WEINTOWN()]">
@@ -13,7 +13,7 @@
         </div>
       </div>
     </div>
-    <div class=" flex flex-col">
+    <div class=" ">
       <div class="bg-gray-100 w-full h-auto flex flex-row ">
         <div class="relative flex-1 flex flex-col gap-1 items-center">
           <label class="text-gray-800 text-base text-center">
@@ -47,26 +47,27 @@
         </div>
       </div>
     </div>
-    <l-map style="height: 888px;" :center="center" :zoom="parseInt(zoom)" @update:center="$emit('update-center',$event)" @update:zoom="$emit('update-zoom',$event)" @update:bounds="$emit('update-bounds',$event)">
-      <l-tile-layer v-if="basemaps.length>0" v-for="baseMap in basemaps" :key="baseMap.handle" :name="baseMap.name" :visible="baseMap.handle==basemap?true:false" :url="baseMap.urii" :attribution="baseMap.attribution" layer-type="base" />
-      <l-geo-json v-if="brookline" :geojson="brookline" :options="optsCenterlines" />
-      <l-geo-json v-if="brighton" :geojson="brighton" :options="optsCenterlines" />
-      <l-geo-json v-if="traceActive.features && traceActive.features[0].geometry.coordinates.length>=2" :geojson="_CANDIDATES()" :options="optsCandidates" />
-      <l-geo-json v-if="region=='brookline'" :geojson="brooklinePoly" :options="optsRegionBoundary" />
-      <l-geo-json v-if="region=='brighton'" :geojson="brightonPoly" :options="optsRegionBoundary" />
-      <!-- <l-geo-json v-if="_WINBUFFERBROOKLINE" :geojson="_WINBUFFERBROOKLINE" :options="optsTraceActive" />
-   -->
-      <!-- <l-geo-json v-if="_WINBUFFERBRIGHTON" :geojson="_WINBUFFERBRIGHTON" :options="optsTraceActive" />
-   -->
-      <l-geo-json v-if="traceActive.features && traceActive.features[0].geometry.coordinates.length>=2" :geojson="traceActive" :options="optsTraceActive" />
-      <l-geo-json v-if="traceActive.features && traceActive.features[0].geometry.coordinates.length>0" :geojson="_LEADBUFFER()" :options="optsTraceBuffer" />
-      <l-marker :lat-lng="lll()">
-        <l-icon :icon-anchor="[8,12]">
-          <img src="../assets/noun_Arrow_2167324.svg" :style="`transform: rotate(${_BEARING()}deg)`">
-        </l-icon>
-      </l-marker>
-    </l-map>
   </div>
+  <l-map class="" :options="{zoomControl: false}" :center="center" :zoom="parseInt(zoom)" @update:center="$emit('update-center',$event)" @update:zoom="$emit('update-zoom',$event)" @update:bounds="$emit('update-bounds',$event)">
+    <l-tile-layer v-if="basemaps.length>0" v-for="baseMap in basemaps" :key="baseMap.handle" :name="baseMap.name" :visible="baseMap.handle==basemap?true:false" :url="baseMap.urii" :attribution="baseMap.attribution" layer-type="base" />
+    <l-control-zoom position="topright"></l-control-zoom>
+    <l-geo-json v-if="brookline" :geojson="brookline" :options="optsCenterlines" />
+    <l-geo-json v-if="brighton" :geojson="brighton" :options="optsCenterlines" />
+    <l-geo-json v-if="traceActive.features && traceActive.features[0].geometry.coordinates.length>=2" :geojson="_CANDIDATES()" :options="optsCandidates" />
+    <l-geo-json v-if="region=='brookline'" :geojson="brooklinePoly" :options="optsRegionBoundary" />
+    <l-geo-json v-if="region=='brighton'" :geojson="brightonPoly" :options="optsRegionBoundary" />
+    <!-- <l-geo-json v-if="_WINBUFFERBROOKLINE" :geojson="_WINBUFFERBROOKLINE" :options="optsTraceActive" />
+   -->
+    <!-- <l-geo-json v-if="_WINBUFFERBRIGHTON" :geojson="_WINBUFFERBRIGHTON" :options="optsTraceActive" />
+   -->
+    <l-geo-json v-if="traceActive.features && traceActive.features[0].geometry.coordinates.length>=2" :geojson="traceActive" :options="optsTraceActive" />
+    <l-geo-json v-if="traceActive.features && traceActive.features[0].geometry.coordinates.length>0" :geojson="_LEADBUFFER()" :options="optsTraceBuffer" />
+    <l-marker :lat-lng="lll()">
+      <l-icon :icon-anchor="[8,12]">
+        <img src="../assets/noun_Arrow_2167324.svg" :style="`transform: rotate(${_BEARING()}deg)`">
+      </l-icon>
+    </l-marker>
+  </l-map>
   <!-- /root container div
  -->
 </template>
@@ -297,7 +298,11 @@ const _BBOX2BOUNDS = () => {
 }
 </script>
 
-<style>
+<style scoped>
+.leaflet-control-container {
+  display: block;
+}
+
 .lin {
   -webkit-filter: drop-shadow( 0px 0px 4px black);
   filter: drop-shadow( 0px 0px 4px black);

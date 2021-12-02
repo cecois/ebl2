@@ -68,12 +68,6 @@
         "urii": "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
         "thmb": "https://a.tile.opentopomap.org/13/2478/3030.png"
     }, {
-        "name": "Google Hybrid",
-        "handle": "google_hybrid",
-        "urii": "https://mt3.google.com/vt/lyrs=y&x={x}&y={y}&z={z}",
-        "thmb": "https://mt3.google.com/vt/lyrs=y&x=79279&y=96968&z=18",
-        "hue": "dark"
-    }, {
         "name": "OpenCycleMap",
         "handle": "ocm",
         "urii": "https://tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=4e07c12ddb92435fbaf5d077958a5f43",
@@ -110,7 +104,7 @@
         "thmb": "https://tile.thunderforest.com/spinal-map/18/79279/96968.png?apikey=4e07c12ddb92435fbaf5d077958a5f43",
         "hue": "dark"
     }],
-    "_GEOLOC": false,
+    "_GEOLOC": true,
     "_SUBS": [{
         "og": "Aisle",
         "re": "Asl"

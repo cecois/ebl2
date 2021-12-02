@@ -1,5 +1,5 @@
 <template>
-  <div id="template-root p-0 m-0 h-12">
+  <div id="template-root p-0 m-0" class="h-screen">
     <!-- component -->
     <!-- follow me on twitter @asad_codes -->
     <div id="header" class="flex flex-wrap place-items-center">
@@ -11,7 +11,7 @@
               ebl-2.1.2
             </a>
             <!-- Nav Links -->
-            <ul class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12 ">
+            <ul class=" md:flex px-4 mx-auto font-semibold font-heading space-x-12 ">
               <!-- <li v-for="_region in _REGIONS"><a @click.prevent="region=_region.handle" :class="['nav-button',_region.handle==region?'nav-button-chosen':'']" href="#">{{_region.label}}</a></li> -->
               <!-- <li><a @click.prevent="_GETWEATHER" class="underline" href="">WTHR</a></li> -->
               <li><a @click.prevent="_FAKETRACE" class="underline" href="">faketrxc</a></li>
@@ -86,19 +86,18 @@
       </ol>
     </div>
  -->
-    <Footer @update-basemap="_SETBASEMAP" :basemaps="CONFIG._BASEMAPS
-" :basemap="_BASEMAP" />
+    <Footer @update-basemap="_SETBASEMAP" :basemaps="CONFIG._BASEMAPS" :basemap="_BASEMAP" />
     <!-- <Map @update-center="_CENTERED" @update-zoom="_SETZOOM" :center="_CENTERME()" :basemaps="CONFIG._BASEMAPS" :subs="_SUBS" :basemap="_BASEMAP" :zoom="_ZOOM" :brookline="Brookline" :brighton="Brighton" :brooklinePoly="BrooklinePoly" :brightonPoly="BrightonPoly" :lastActive="_TRACE.at(-1)" :traceActive="_TRACEACTIVEGEOM" :styles="_STYLES" :region="region" :weather="_WEATHER.main" /> -->
-    <Map @update-center="_CENTERED" :center="_CENTERME()" :basemaps="CONFIG._BASEMAPS" :subs="_SUBS" :basemap="_BASEMAP" :zoom="_ZOOM" :brookline="Brookline" :brighton="Brighton" :brooklinePoly="BrooklinePoly" :brightonPoly="BrightonPoly" :lastActive="_TRACE.at(-1)" :traceActive="_TRACEACTIVEGEOM" :styles="_STYLES" :region="region" :weather="_WEATHER.main" />
+    <Map @update-center="_CENTERED" :center="_CENTERME()" :basemaps="CONFIG._BASEMAPS" :subs="_SUBS" :basemap="_BASEMAP" :zoom="_ZOOM" :brookline="Brookline" :brighton="Brighton" :brooklinePoly="BrooklinePoly" :brightonPoly="BrightonPoly" :lastActive="_TRACE.length>0?_TRACE[(_TRACE.length-1)]:null" :traceActive="_TRACEACTIVEGEOM" :styles="_STYLES" :region="region" :weather="_WEATHER.main" />
   </div>
   <!-- root -->
 </template>
 
 <script setup>
-import CONFIG from '../CONFIG.json'
-import { ref, reactive, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { ref, reactive, onMounted, watch } from 'vue'
 import { latLngBounds, latLng } from 'leaflet'
+import CONFIG from '../CONFIG.json'
 import Map from '/src/components/Map.vue'
 import Footer from '/src/components/Footer.vue'
 import Brookline from '../assets/join_brookline.json'
@@ -236,7 +235,7 @@ onMounted(() => {
 
         if (_TRACE.length % 25 === 0) { _GETWEATHER(); }
 
-        let c = _TRACE.at(-1);
+        let c = _TRACE[(_TRACE.length - 1)];
         !_PAUSED.value && (_CENTER.value = `${c[0]},${c[1]}`);
         !_PAUSED.value && (_SETZOOM("18"))
 
@@ -358,7 +357,7 @@ const _FAKETRACE = () => {
   if (_TRACE.length % 25 === 0) { _GETWEATHER(); }
 
 
-  let c = _TRACE.at(-1);
+  let c = _TRACE[(_TRACE.length - 1)];
   !_PAUSED.value && (_CENTER.value = `${c[0]},${c[1]}`);
   !_PAUSED.value && (_SETZOOM("18"))
 
