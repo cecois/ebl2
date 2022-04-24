@@ -1,15 +1,16 @@
 {
     "name": "ebl",
-    "version": "2.0.0",
+    "version": "2.2.9",
     "scripts": {
         "dev": "vite",
-        "build": "vite build",
+        "build": "vite build --mode production",
         "serve": "vite preview"
     },
     "dependencies": {
         "@heroicons/vue": "^1.0.4",
         "leaflet": "^1.7.1",
         "vue": "^3.0.5",
+        "vue-chart-3": "^3.0.4",
         "vue-router": "^4.0.5",
         "vuex": "^4.0.0"
     },
@@ -24,6 +25,8 @@
         "eslint-plugin-vue": "^7.8.0",
         "postcss": "^8.2.9",
         "prettier": "^2.2.1",
+        "sass": "^1.45.1",
+        "sass-loader": "^12.4.0",
         "tailwindcss": "^2.0.4",
         "vite": "^2.1.5"
     }

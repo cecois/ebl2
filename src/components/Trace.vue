@@ -8,7 +8,7 @@
         <nav id="app-nav" class="flex justify-between text-white w-screen">
           <div class="px-5 xl:px-12 py-6 flex w-full items-center">
             <a class="text-3xl font-bold font-heading" href="#">
-              ebl-2.1.2
+              ebl-2.2.9
             </a>
             <!-- Nav Links -->
             <ul class=" md:flex px-4 mx-auto font-semibold font-heading space-x-12 ">
@@ -22,7 +22,8 @@
             </ul>
             <!-- Header Icons -->
             <div class="hidden xl:flex items-center space-x-5 items-center">
-              <a @click.prevent="region=_region.handle" :class="['nav-button',_region.handle==region?'nav-button-chosen':'','mr-8']" href="#" v-for="_region in _REGIONS">{{_region.label}}</a>
+              <!-- <a @click.prevent="region=_region.handle" :class="['nav-button',_region.handle==region?'nav-button-chosen':'','mr-8']" href="#" v-for="_region in _REGIONS">{{_region.label}}</a>
+ -->
               <!-- <a class="hover:text-gray-200" href="#">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
@@ -42,7 +43,8 @@
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hover:text-gray-200" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-              </a> -->
+              </a> 
+            -->
             </div>
           </div>
           <!-- Responsive navbar -->
@@ -87,7 +89,9 @@
     </div>
  -->
     <Footer @update-basemap="_SETBASEMAP" :basemaps="CONFIG._BASEMAPS" :basemap="_BASEMAP" />
-    <!-- <Map @update-center="_CENTERED" @update-zoom="_SETZOOM" :center="_CENTERME()" :basemaps="CONFIG._BASEMAPS" :subs="_SUBS" :basemap="_BASEMAP" :zoom="_ZOOM" :brookline="Brookline" :brighton="Brighton" :brooklinePoly="BrooklinePoly" :brightonPoly="BrightonPoly" :lastActive="_TRACE.at(-1)" :traceActive="_TRACEACTIVEGEOM" :styles="_STYLES" :region="region" :weather="_WEATHER.main" /> -->
+    <!-- THis ONE BoggED
+   <Map @update-center="_CENTERED"
+ :center="_CENTERME()" :basemaps="CONFIG._BASEMAPS" :subs="_SUBS" :basemap="x" :zoom="_ZOOM" :brookline="Brookline" :brighton="Brighton" :brooklinePoly="BrooklinePoly" :brightonPoly="BrightonPoly" :lastActive="_TRACE.length>0?_TRACE[(_TRACE.length-1)]:null" :traceActive="_TRACEACTIVEGEOM" :styles="_STYLES" :region="region" :weather="_WEATHER.main" /> -->
     <Map @update-center="_CENTERED" :center="_CENTERME()" :basemaps="CONFIG._BASEMAPS" :subs="_SUBS" :basemap="_BASEMAP" :zoom="_ZOOM" :brookline="Brookline" :brighton="Brighton" :brooklinePoly="BrooklinePoly" :brightonPoly="BrightonPoly" :lastActive="_TRACE.length>0?_TRACE[(_TRACE.length-1)]:null" :traceActive="_TRACEACTIVEGEOM" :styles="_STYLES" :region="region" :weather="_WEATHER.main" />
   </div>
   <!-- root -->
@@ -216,7 +220,10 @@ onMounted(() => {
   if (CONFIG._GEOLOC) {
     navigator.geolocation.watchPosition((watchedPosition => {
 
+        // console.log(new Date());
+
         _TRACE.push([watchedPosition.coords.longitude, watchedPosition.coords.latitude])
+          // console.log(`trace.length now: ${_TRACE.length}`)
         let o = {
           "type": "FeatureCollection",
           "features": [{
@@ -229,11 +236,10 @@ onMounted(() => {
           }]
         };
 
-        let zoomer =
+        let zoomer = _TRACEACTIVEGEOM.value = o;
+        // console.log("zoomer", zoomer);
 
-          _TRACEACTIVEGEOM.value = o;
-
-        if (_TRACE.length % 25 === 0) { _GETWEATHER(); }
+        if (_TRACE.length % 100 === 0) { _GETWEATHER(); }
 
         let c = _TRACE[(_TRACE.length - 1)];
         !_PAUSED.value && (_CENTER.value = `${c[0]},${c[1]}`);
@@ -249,6 +255,7 @@ onMounted(() => {
 })
 
 const _GETWEATHER = async() => {
+  console.log("in _GETWEATHER");
 
   _WEATHER.main.feels_like = '⏱'
 
@@ -354,7 +361,7 @@ const _FAKETRACE = () => {
 
 
 
-  if (_TRACE.length % 25 === 0) { _GETWEATHER(); }
+  if (_TRACE.length % 100 === 0) { _GETWEATHER(); }
 
 
   let c = _TRACE[(_TRACE.length - 1)];
@@ -368,17 +375,21 @@ const _FAKETRACE = () => {
 const colors = { bg: "green" };
 
 const _REGIONAUDIT = async() => {
-  // console.log(`n regionaud: we have ${_CENTERLINES[PROPS.region].length} centerlines for ${PROPS.region}`)
-  // If thE CuRrenT reGIoN HAs no cENTErLineS, FeTCH EM
-  // if (!_CENTERLINES[PROPS.region]) { // let response = await fetch("https://api.npms.io/v2/search?q=vue"); // _CENTERLINES[PROPS.region] = await response.json(); // }
+  console.log("in _REGIONAUDIT...")
+    // console.log(`n regionaud: we have ${_CENTERLINES[PROPS.region].length} centerlines for ${PROPS.region}`)
+    // If thE CuRrenT reGIoN HAs no cENTErLineS, FeTCH EM
+    // if (!_CENTERLINES[PROPS.region]) { // let response = await fetch("https://api.npms.io/v2/search?q=vue"); // _CENTERLINES[PROPS.region] = await response.json(); // }
 }
 const _SETBASEMAP = (b) => {
+  console.log("in _SETBASEMAP...")
   _BASEMAP.value = b.handle
 }
 const _SETZOOM = (z) => {
+  console.log("in _SETZOOM...")
   _ZOOM.value = z;
 }
 const _SETROUTE = () => {
+  console.log("in _SETROUTE...")
   ROUTER.push({
     title: "Home",
     params: {
@@ -390,16 +401,19 @@ const _SETROUTE = () => {
 }
 
 const _BBOX2BOUNDS = () => {
-  // WE Need a bOuNDs OBJ
+  console.log("in _BBOX2BOUNDS...")
+    // WE Need a bOuNDs OBJ
   let bb = _BBOX.value.split(',')
   let bbb = { _southWest: { lat: bb[1], lng: bb[0] }, _northEast: { lat: bb[3], lng: bb[2] } }
   return bbb;
 }
 const _SETBBOX = (b) => {
-  // console.log("b in setbbox", b);
+  console.log("in _SETBBOX...")
+    // console.log("b in setbbox", b);
   _BBOX.value = b.toBBoxString()
 }
 const _NOTDONE = (regionOb) => {
+  console.log("in _NOTDONE...")
 
   regionOb.features = regionOb.features.filter(f => {
     return f.properties.done == 'not done'
@@ -407,10 +421,12 @@ const _NOTDONE = (regionOb) => {
   return regionOb;
 }
 const _CENTERED = (h) => {
+  console.log("in _CENTERED...")
   _CENTER.value = `${h.lng},${h.lat}`
 }
 const _CENTERME = () => {
-  // let b = PROPS.center.split(',')
+  console.log("in _CENTERME...")
+    // let b = PROPS.center.split(',')
   let b = _CENTER.value.split(',')
   let clsw = latLng(b[1], b[0])
   return clsw
@@ -421,7 +437,8 @@ const _CENTERME = () => {
 </script>
 
 <style>
-@import url("https://overpass-30e2.kxcdn.com/overpass.css");
+/*@import url("https://overpass-30e2.kxcdn.com/overpass.css");*/
+
 body {
   font-family: 'overpass';
   font-weight: 800;

@@ -1,6 +1,7 @@
 <template>
   <div id="mapthumb" class="w-full h-full">
-    <l-map style="height: 20vh;width:100%;" :center="center" :zoom="zoom">
+    <l-map ref="MAPTHUMB" style="height: 30vh;width:100%;" @ready="setBbox()">
+      <!--   -->
       <l-geo-json v-if="trackisogeo" :geojson="trackisogeo" :options="optsTrackIso" />
     </l-map>
   </div>
@@ -16,56 +17,42 @@ import { latLngBounds, latLng } from 'leaflet'
 import { LMap, LTileLayer, LGeoJson, LMarker, LIcon } from '@vue-leaflet/vue-leaflet';
 import * as turf from '@turf/turf'
 
+
+/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++++ mAp HACk  */
+// THE :BoUNDS biNd DoeSn'T woRk AS oF ThIS wRiTInG - thIs IS as WORKAROuND we UsE VIa the @rEADy evenT
+const MAPTHUMB = ref(null);
+const leafletFitBounds = () => {
+  let bbox = turf.bbox(PROPS.trackisogeo); // [w,s,e,n]
+  let boundsarray = [
+    [bbox[3], bbox[0]],
+    [bbox[1], bbox[2]]
+  ]
+  MAPTHUMB.value.leafletObject.fitBounds(boundsarray);
+}
+const setBbox = () => leafletFitBounds()
+  /* +++++++++++++++++++++++++++++++++++++++++++++++++++++++ /mAp HACk  */
+
 onMounted(() => {
   console.log(`dashboardmapthumb comp mounted at ${new Date}`);
-
 })
 
 const ROUTE = useRoute(),
   ROUTER = useRouter(),
-  zoom = ref(13),
-  center = ref([42.35448839591497, -71.14282892527953]),
   PROPS = defineProps({
     trackisogeo: Object,
     styles: Object
   })
-  // const bounds = reactive(turf.bbox(PROPS.trackisogeo));
-  // const maxBounds = reactive(turf.bbox(PROPS.trackisogeo));
-const envelope = reactive(turf.envelope(PROPS.trackisogeo));
-// const center = reactive(turf.flip(turf.center(envelope)).geometry.coordinates); //WISH i didn't HAvE to DO ThiS
-const area = reactive(turf.area(envelope))
-
-const setCenter = () => {
-
-    let coords = turf.flip(turf.centroid(envelope)).geometry.coordinates
-    center.value = coords;
-  } //setcenTER
-const setZoom = () => {
-  switch (true) {
-    case (area <= 81500):
-      zoom.value = 16;
-      break;
-    case (area <= 388500):
-      zoom.value = 15;
-      break;
-    case (area <= 1400000):
-      zoom.value = 14;
-      break;
-    default:
-      zoom.value = 13;
-      break;
-  } //SWiTCh.areA
-}
 
 const optsTrackIso = {
   style: function(feature) {
-    return PROPS.styles.centerlinesIso;
+    return PROPS.styles.trackIso;
   }
 }
 
 watch(() => [PROPS.trackisogeo], (newp, oldp) => {
-  setZoom();
-  setCenter();
+  if (typeof MAPTHUMB.value.leafletObject.fitBounds == 'function') { setBbox(); }
+  /*setZoom();
+  setCenter();*/
 })
 </script>
 

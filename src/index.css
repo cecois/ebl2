@@ -1,3 +1,36 @@
+@import url("./overpass.css");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+/*
+           ,,           ,,                   ,,
+         `7MM          *MM                 `7MM
+           MM           MM                   MM
+ .P"Ybmmm  MM  ,pW"Wq.  MM,dMMb.   ,6"Yb.    MM  ,pP"Ybd
+:MI  I8    MM 6W'   `Wb MM    `Mb 8)   MM    MM  8I   `"
+ WmmmP"    MM 8M     M8 MM     M8  ,pm9MM    MM  `YMMMa.
+8M         MM YA.   ,A9 MM.   ,M9 8M   MM    MM  L.   I8
+ YMMMMMb .JMML.`Ybmd9'  P^YbmdP'  `Moo9^Yo..JMML.M9mmmP'
+6'     dP
+Ybmmmd'
+
+*/
+
+::selection {
+	color: white;
+  background: hsla(202,
+66%,
+39%,
+1); /* WebKit/Blink Browsers */
+}
+::-moz-selection {
+	color: white;
+  background: hsla(202,
+66%,
+39%,
+1); /* Gecko Browsers */
+}
+

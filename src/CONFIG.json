@@ -6,20 +6,32 @@
             "width": 3,
             "weight": 8
         },
-        "centerlinesIso": {
-            "color": "rgba(255, 114, 114, 1)",
+        "trackIso": {
+            "color": "hsla(202, 66%, 39%, .8)",
             "fill": false,
-            "width": 3,
-            "weight": 3
+            "width": 4.1,
+            "weight": 4.1
+        },
+        "centerlinesUpNott": {
+            "color": "rgba(255, 114, 14, 1)",
+            "fill": false,
+            "width": 4,
+            "weight": 4
+        },
+        "centerlinesUpDone": {
+            "color": "rgba(252, 160, 95, 1)",
+            "fill": false,
+            "width": 4,
+            "weight": 4
         },
         "centerlinesDone": {
-            "color": "rgba(10, 114, 114, 0)",
+            "color": "rgba(89, 89, 89, .4)",
             "fill": false,
             "width": 2,
-            "weight": 8
+            "weight": 4
         },
         "centerlinesNott": {
-            "color": "rgba(125, 120, 122, 1)",
+            "color": "rgba(255, 250, 252, 1)",
             "fill": false,
             "width": 2,
             "weight": 4
@@ -193,10 +205,12 @@
     "_REGIONS": [{
         "label": "Bri",
         "handle": "brighton",
-        "abbrev": "brhgtn"
+        "abbrev": "brhgtn",
+        "nom": "Brighton"
     }, {
         "label": "Bro",
         "handle": "brookline",
-        "abbrev": "brklin"
+        "abbrev": "brklin",
+        "nom": "Brookline"
     }]
 }

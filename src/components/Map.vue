@@ -14,7 +14,13 @@
       </div>
     </div>
     <div class=" ">
-      <div class="bg-gray-100 w-full h-auto flex flex-row ">
+      <div class="p-6 bg-gray-100 w-full h-auto flex flex-row ">
+        <ul>
+          <li>{{DEBUG.candidates.count}}</li>
+          <li></li>
+        </ul>
+      </div>
+      <!--       <div class="bg-gray-100 w-full h-auto flex flex-row ">
         <div class="relative flex-1 flex flex-col gap-1 items-center">
           <label class="text-gray-800 text-base text-center">
             <ChevronLeftIcon class="transform -rotate-45 h-5 w-5 directional-icon" />
@@ -45,17 +51,17 @@
         <div class="relative flex-1 flex flex-col gap-1 pt-3 items-center">
           <p v-if="weather.feels_like" class="text-sm">{{Math.round(weather.feels_like)}}°</p>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
   <l-map class="" :options="{zoomControl: false}" :center="center" :zoom="parseInt(zoom)" @update:center="$emit('update-center',$event)" @update:zoom="$emit('update-zoom',$event)" @update:bounds="$emit('update-bounds',$event)">
     <l-tile-layer v-if="basemaps.length>0" v-for="baseMap in basemaps" :key="baseMap.handle" :name="baseMap.name" :visible="baseMap.handle==basemap?true:false" :url="baseMap.urii" :attribution="baseMap.attribution" layer-type="base" />
     <l-control-zoom position="topright"></l-control-zoom>
-    <l-geo-json v-if="brookline" :geojson="brookline" :options="optsCenterlines" />
-    <l-geo-json v-if="brighton" :geojson="brighton" :options="optsCenterlines" />
+    <!-- <l-geo-json v-if="brookline" :geojson="brookline" :options="optsCenterlines" /> -->
+    <!-- <l-geo-json v-if="brighton" :geojson="brighton" :options="optsCenterlines" /> -->
     <l-geo-json v-if="traceActive.features && traceActive.features[0].geometry.coordinates.length>=2" :geojson="_CANDIDATES()" :options="optsCandidates" />
-    <l-geo-json v-if="region=='brookline'" :geojson="brooklinePoly" :options="optsRegionBoundary" />
-    <l-geo-json v-if="region=='brighton'" :geojson="brightonPoly" :options="optsRegionBoundary" />
+    <!-- <l-geo-json v-if="region=='brookline'" :geojson="brooklinePoly" :options="optsRegionBoundary" /> -->
+    <!-- <l-geo-json v-if="region=='brighton'" :geojson="brightonPoly" :options="optsRegionBoundary" /> -->
     <!-- <l-geo-json v-if="_WINBUFFERBROOKLINE" :geojson="_WINBUFFERBROOKLINE" :options="optsTraceActive" />
    -->
     <!-- <l-geo-json v-if="_WINBUFFERBRIGHTON" :geojson="_WINBUFFERBRIGHTON" :options="optsTraceActive" />
@@ -133,6 +139,7 @@ const _BEARING = () => (PROPS.traceActive.features[0].geometry.coordinates.lengt
 
 const ROUTE = useRoute(),
   ROUTER = useRouter(),
+  DEBUG = { candidates: { last: null, count: 0 } },
   PROPS = defineProps({
     bbox: String,
     basemaps: Array,
