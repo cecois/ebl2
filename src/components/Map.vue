@@ -16,58 +16,61 @@
     <div class=" ">
       <div class="p-6 bg-gray-100 w-full h-auto flex flex-row ">
         <ul>
-          <li>{{DEBUG.candidates.count}}</li>
+      <!-- <li>{{DEBUG.candidates.count}}</li>
+ -->
           <li></li>
         </ul>
       </div>
-      <!--       <div class="bg-gray-100 w-full h-auto flex flex-row ">
-        <div class="relative flex-1 flex flex-col gap-1 items-center">
-          <label class="text-gray-800 text-base text-center">
-            <ChevronLeftIcon class="transform -rotate-45 h-5 w-5 directional-icon" />
-          </label>
-          <label :class="['text-gray-400','font-thin','text-sm text-center','relative -inset-y-2',_bearings.sw.length<=3 && _bearings.sw.length>0?'lowStreetCountAlert':'']">{{_bearings.sw.length}}</label>
-        </div>
-        <div class="relative flex-1 flex flex-col gap-1 items-center">
-          <label class="text-gray-800 text-base text-center">
-            <ChevronRightIcon class="float-right transform rotate-45 justify-self-auto h-5 w-5 directional-icon" />
-          </label>
-          <label :class="['text-gray-400','font-thin','text-sm text-center','relative -inset-y-2',_bearings.se.length<=3 && _bearings.se.length>0?'lowStreetCountAlert':'']">{{_bearings.se.length}}</label>
-        </div>
-        <div class="relative flex-1 flex flex-col gap-1 items-center">
-          <label class="-inset-y-1 relative text-gray-800 text-base text-center">
-            <ChevronRightIcon class="float-right transform -rotate-45 justify-self-auto h-5 w-5 directional-icon" />
-          </label>
-          <label :class="['text-gray-400','font-thin','text-sm text-center','relative -inset-y-2',_bearings.ne.length<=3 && _bearings.ne.length>0?'lowStreetCountAlert':'']">{{_bearings.ne.length}}</label>
-        </div>
-        <div class="relative flex-1 flex flex-col gap-1 items-center">
-          <label class="-inset-y-1 relative text-gray-800 text-base text-center">
-            <ChevronLeftIcon class="float-right transform rotate-45 justify-self-auto h-5 w-5 directional-icon" />
-          </label>
-          <label :class="['text-gray-400','font-thin','text-sm text-center','relative -inset-y-2',_bearings.nw.length<=3 && _bearings.nw.length>0?'lowStreetCountAlert':'']">{{_bearings.nw.length}}</label>
-        </div>
-        <div class="relative flex-1 flex flex-col gap-1 pt-2 items-center">
-          <p class="text-xl">{{traceActive.features[0].geometry.coordinates.length}}</p>
-        </div>
-        <div class="relative flex-1 flex flex-col gap-1 pt-3 items-center">
-          <p v-if="weather.feels_like" class="text-sm">{{Math.round(weather.feels_like)}}°</p>
-        </div>
-      </div> -->
+      <div class="bg-gray-100 w-full h-auto flex flex-row ">
+  <div class="relative flex-1 flex flex-col gap-1 items-center">
+    <label class="text-gray-800 text-base text-center">
+      <ChevronLeftIcon class="transform -rotate-45 h-5 w-5 directional-icon" />
+    </label>
+    <label :class="['text-gray-400','font-thin','text-sm text-center','relative -inset-y-2',_bearings.sw.length<=3 && _bearings.sw.length>0?'lowStreetCountAlert':'']">{{_bearings.sw.length}}</label>
+  </div>
+  <div class="relative flex-1 flex flex-col gap-1 items-center">
+    <label class="text-gray-800 text-base text-center">
+      <ChevronRightIcon class="float-right transform rotate-45 justify-self-auto h-5 w-5 directional-icon" />
+    </label>
+    <label :class="['text-gray-400','font-thin','text-sm text-center','relative -inset-y-2',_bearings.se.length<=3 && _bearings.se.length>0?'lowStreetCountAlert':'']">{{_bearings.se.length}}</label>
+  </div>
+  <div class="relative flex-1 flex flex-col gap-1 items-center">
+    <label class="-inset-y-1 relative text-gray-800 text-base text-center">
+      <ChevronRightIcon class="float-right transform -rotate-45 justify-self-auto h-5 w-5 directional-icon" />
+    </label>
+    <label :class="['text-gray-400','font-thin','text-sm text-center','relative -inset-y-2',_bearings.ne.length<=3 && _bearings.ne.length>0?'lowStreetCountAlert':'']">{{_bearings.ne.length}}</label>
+  </div>
+  <div class="relative flex-1 flex flex-col gap-1 items-center">
+    <label class="-inset-y-1 relative text-gray-800 text-base text-center">
+      <ChevronLeftIcon class="float-right transform rotate-45 justify-self-auto h-5 w-5 directional-icon" />
+    </label>
+    <label :class="['text-gray-400','font-thin','text-sm text-center','relative -inset-y-2',_bearings.nw.length<=3 && _bearings.nw.length>0?'lowStreetCountAlert':'']">{{_bearings.nw.length}}</label>
+  </div>
+  <div class="relative flex-1 flex flex-col gap-1 pt-2 items-center">
+    <p class="text-xl">{{traceActive.features[0].geometry.coordinates.length}}</p>
+  </div>
+  <div class="relative flex-1 flex flex-col gap-1 pt-3 items-center">
+    <p v-if="weather.feels_like" class="text-sm">{{Math.round(weather.feels_like)}}°</p>
+  </div>
+</div>
+
     </div>
   </div>
   <l-map class="" :options="{zoomControl: false}" :center="center" :zoom="parseInt(zoom)" @update:center="$emit('update-center',$event)" @update:zoom="$emit('update-zoom',$event)" @update:bounds="$emit('update-bounds',$event)">
-    <l-tile-layer v-if="basemaps.length>0" v-for="baseMap in basemaps" :key="baseMap.handle" :name="baseMap.name" :visible="baseMap.handle==basemap?true:false" :url="baseMap.urii" :attribution="baseMap.attribution" layer-type="base" />
+    <!-- <l-tile-layer v-if="basemaps.length>0" v-for="baseMap in basemaps" :key="baseMap.handle" :name="baseMap.name" :visible="baseMap.handle==basemap?true:false" :url="baseMap.urii" :attribution="baseMap.attribution" layer-type="base" /> -->
     <l-control-zoom position="topright"></l-control-zoom>
     <!-- <l-geo-json v-if="brookline" :geojson="brookline" :options="optsCenterlines" /> -->
-    <!-- <l-geo-json v-if="brighton" :geojson="brighton" :options="optsCenterlines" /> -->
-    <l-geo-json v-if="traceActive.features && traceActive.features[0].geometry.coordinates.length>=2" :geojson="_CANDIDATES()" :options="optsCandidates" />
+    <l-geo-json v-if="brighton" :geojson="brighton" :options="optsCenterlines" />
+
+    <!-- <l-geo-json v-if="traceActive.features && traceActive.features[0].geometry.coordinates.length>=2" :geojson="_CANDIDATES()" :options="optsCandidates" /> -->
     <!-- <l-geo-json v-if="region=='brookline'" :geojson="brooklinePoly" :options="optsRegionBoundary" /> -->
     <!-- <l-geo-json v-if="region=='brighton'" :geojson="brightonPoly" :options="optsRegionBoundary" /> -->
     <!-- <l-geo-json v-if="_WINBUFFERBROOKLINE" :geojson="_WINBUFFERBROOKLINE" :options="optsTraceActive" />
    -->
     <!-- <l-geo-json v-if="_WINBUFFERBRIGHTON" :geojson="_WINBUFFERBRIGHTON" :options="optsTraceActive" />
    -->
-    <l-geo-json v-if="traceActive.features && traceActive.features[0].geometry.coordinates.length>=2" :geojson="traceActive" :options="optsTraceActive" />
-    <l-geo-json v-if="traceActive.features && traceActive.features[0].geometry.coordinates.length>0" :geojson="_LEADBUFFER()" :options="optsTraceBuffer" />
+    <!-- <l-geo-json v-if="traceActive.features && traceActive.features[0].geometry.coordinates.length>=2" :geojson="traceActive" :options="optsTraceActive" /> -->
+    <!-- <l-geo-json v-if="traceActive.features && traceActive.features[0].geometry.coordinates.length>0" :geojson="_LEADBUFFER()" :options="optsTraceBuffer" /> -->
     <l-marker :lat-lng="lll()">
       <l-icon :icon-anchor="[8,12]">
         <img src="../assets/noun_Arrow_2167324.svg" :style="`transform: rotate(${_BEARING()}deg)`">

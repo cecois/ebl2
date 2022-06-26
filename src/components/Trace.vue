@@ -117,14 +117,19 @@ const ROUTE = useRoute(),
   _SUBS = CONFIG._SUBS,
   _STYLES = CONFIG._STYLES,
   _LOADING = ref(false),
-  PROPS = defineProps({ region: String, card: String, basemap: String, center: String, zoom: String }),
+  PROPS = defineProps({
+    region: String
+      // , card: String, basemap: String, center: String, zoom: String 
+  }),
   //A coupLe WE goNNA PurTuRb coNSTAntly
   _ZOOM = ref(PROPS.zoom),
   _BASEMAP = ref(PROPS.basemap),
   _META = ref({ log: [] }),
-  _CENTER = ref(PROPS.center ? PROPS.center : "-100,50"),
-  // _CENTERLINES = { brighton: {}, brookline: {} },
-  _TRACKS = null,
+  _OLDCENTER = ref(PROPS.center ? PROPS.center : "-100,50"),
+  _CENTER = ref("-71.11222743988037,42.346682512202605")
+
+// _CENTERLINES = { brighton: {}, brookline: {} },
+_TRACKS = null,
   _PAUSED = ref(false),
   _TRACE = reactive([
     [-71.14183902740479,
@@ -250,7 +255,7 @@ onMounted(() => {
       }) //.watchposition
   }
 
-  _GETWEATHER();
+  // _GETWEATHER();
   // _SETROUTE();
 })
 
@@ -262,7 +267,7 @@ const _GETWEATHER = async() => {
   await fetch("https://api.openweathermap.org/data/2.5/weather?q=Boston,usa&APPID=0d9f83b0f1264e2355537aafcaa8a660&units=imperial", {
       "method": "GET"
     }).then(response => response.json())
-    .then(data => _WEATHER.main = data.main)
+    .then(data => _WEATHER.main = `${data.main} at ${new Date()}`)
 
 }
 
@@ -344,21 +349,31 @@ const _FAKETRACE = () => {
     ]
   ]
 
-  _TRACE.push(to[_COUNTER.value])
-  let o = {
-    "type": "FeatureCollection",
-    "features": [{
-      "type": "Feature",
-      "properties": {},
-      "geometry": {
-        "type": "LineString",
-        "coordinates": _TRACE
-      }
-    }]
-  };
 
-  _TRACEACTIVEGEOM.value = o;
+  // _TRACEACTIVEGEOM.value = o;
+  // let i = 0;
+  // do {
+  //   task(i);
+  //   i++;
+  // } while (i < 500);
 
+  const task = (i) => {
+    setTimeout(() => {
+      // console.log(i);
+      _TRACE.push(to[_COUNTER.value])
+      let o = {
+        "type": "FeatureCollection",
+        "features": [{
+          "type": "Feature",
+          "properties": {},
+          "geometry": {
+            "type": "LineString",
+            "coordinates": _TRACE
+          }
+        }]
+      };
+    }, _TRACE.length * i);
+  }
 
 
   if (_TRACE.length % 100 === 0) { _GETWEATHER(); }

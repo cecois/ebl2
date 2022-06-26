@@ -70,34 +70,6 @@
         "warning": "hsla(52, 75%, 70%, 1)"
     },
     "_BASEMAPS": [{
-        "name": "OpenStreetMap",
-        "handle": "osm",
-        "urii": "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        "thmb": "https://c.tile.openstreetmap.org/18/79279/96968.png"
-    }, {
-        "name": "OpenTopoMap",
-        "handle": "opentopo",
-        "urii": "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png",
-        "thmb": "https://a.tile.opentopomap.org/13/2478/3030.png"
-    }, {
-        "name": "OpenCycleMap",
-        "handle": "ocm",
-        "urii": "https://tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=4e07c12ddb92435fbaf5d077958a5f43",
-        "thmb": "https://tile.thunderforest.com/cycle/18/79279/96968.png?apikey=4e07c12ddb92435fbaf5d077958a5f43",
-        "hue": "dark"
-    }, {
-        "name": "Pioneer",
-        "handle": "ocm_pioneer",
-        "urii": "https://tile.thunderforest.com/pioneer/{z}/{x}/{y}.png?apikey=4e07c12ddb92435fbaf5d077958a5f43",
-        "thmb": "https://tile.thunderforest.com/pioneer/18/79279/96968.png?apikey=4e07c12ddb92435fbaf5d077958a5f43",
-        "hue": "light"
-    }, {
-        "name": "Mobile Atlas",
-        "handle": "ocm_mobile",
-        "urii": "https://tile.thunderforest.com/mobile-atlas/{z}/{x}/{y}.png?apikey=4e07c12ddb92435fbaf5d077958a5f43",
-        "thmb": "https://tile.thunderforest.com/mobile-atlas/18/79279/96968.png?apikey=4e07c12ddb92435fbaf5d077958a5f43",
-        "hue": "light"
-    }, {
         "name": "Carto Positron",
         "handle": "carto_positron",
         "urii": "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
@@ -109,12 +81,6 @@
         "urii": "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png",
         "thmb": "https://cartodb-basemaps-c.global.ssl.fastly.net/dark_all/18/79279/96968.png",
         "hue": "light"
-    }, {
-        "name": "Spinal Map",
-        "handle": "ocm_spinal",
-        "urii": "https://tile.thunderforest.com/spinal-map/{z}/{x}/{y}.png?apikey=4e07c12ddb92435fbaf5d077958a5f43",
-        "thmb": "https://tile.thunderforest.com/spinal-map/18/79279/96968.png?apikey=4e07c12ddb92435fbaf5d077958a5f43",
-        "hue": "dark"
     }],
     "_GEOLOC": true,
     "_SUBS": [{
