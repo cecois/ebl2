@@ -1,5 +1,5 @@
 {
-    "_STYLES": {
+    "STYLES": {
         "regionBoundary": {
             "color": "hsla(202, 66%, 39%, 1)",
             "fill": false,
@@ -57,7 +57,7 @@
             "weight": 1
         },
         "candidates": {
-            "color": "hsla(22, 100% , 46% )",
+            "color": "rgba(255, 114, 14, 1)",
             "fill": false,
             "opacity": 1,
             "width": 4,
@@ -69,7 +69,7 @@
         "green": "hsla(69,44%,23%,1)",
         "warning": "hsla(52, 75%, 70%, 1)"
     },
-    "_BASEMAPS": [{
+    "BASEMAPS": [{
         "name": "Carto Positron",
         "handle": "carto_positron",
         "urii": "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
@@ -80,10 +80,10 @@
         "handle": "carto_darkmatter",
         "urii": "https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png",
         "thmb": "https://cartodb-basemaps-c.global.ssl.fastly.net/dark_all/18/79279/96968.png",
-        "hue": "light"
+        "hue": "dark"
     }],
-    "_GEOLOC": true,
-    "_SUBS": [{
+    "GEOLOC": true,
+    "SUBS": [{
         "og": "Aisle",
         "re": "Asl"
     }, {
@@ -168,7 +168,7 @@
         "og": "Way",
         "re": "Way"
     }],
-    "_REGIONS": [{
+    "REGIONS": [{
         "label": "Bri",
         "handle": "brighton",
         "abbrev": "brhgtn",

@@ -1,84 +1,26 @@
 <template>
-  <!-- <a href="" @click.prevent="$emit('update-bbox','-100,80,-99,90')">upb1</a> -->
-  <!-- <a href="" @click.prevent="">{{_BEARING()}}</a> -->
-  <!-- <p>tctv.length: {{PROPS.traceActive.features[0].geometry.coordinates.length}}</p>
-  <p>tctv.length: {{PROPS.traceActive[PROPS.traceActive.features[0].geometry.coordinates.length - 1]}}</p>
-  <p>brng: {{_BEARING()}}</p> -->
-  <div class="">
-    <!-- <p>_bearings.sw: {{_bearings.sw.length}}:_bearings.se: {{_bearings.se.length}}:_bearings.ne: {{_bearings.ne.length}}:_bearings.nw: {{_bearings.nw.length}}</p> -->
-    <div id="streetPlateParent">
-      <div id="streetPlateContentWrapper" :class="['pt-0','pb-1',_WEINTOWN()]">
-        <div id="number" class="align-middle">
-          {{_nearest}}
-        </div>
-      </div>
-    </div>
-    <div class=" ">
-      <div class="p-6 bg-gray-100 w-full h-auto flex flex-row ">
-        <ul>
-      <!-- <li>{{DEBUG.candidates.count}}</li>
- -->
-          <li></li>
-        </ul>
-      </div>
-      <div class="bg-gray-100 w-full h-auto flex flex-row ">
-  <div class="relative flex-1 flex flex-col gap-1 items-center">
-    <label class="text-gray-800 text-base text-center">
-      <ChevronLeftIcon class="transform -rotate-45 h-5 w-5 directional-icon" />
-    </label>
-    <label :class="['text-gray-400','font-thin','text-sm text-center','relative -inset-y-2',_bearings.sw.length<=3 && _bearings.sw.length>0?'lowStreetCountAlert':'']">{{_bearings.sw.length}}</label>
-  </div>
-  <div class="relative flex-1 flex flex-col gap-1 items-center">
-    <label class="text-gray-800 text-base text-center">
-      <ChevronRightIcon class="float-right transform rotate-45 justify-self-auto h-5 w-5 directional-icon" />
-    </label>
-    <label :class="['text-gray-400','font-thin','text-sm text-center','relative -inset-y-2',_bearings.se.length<=3 && _bearings.se.length>0?'lowStreetCountAlert':'']">{{_bearings.se.length}}</label>
-  </div>
-  <div class="relative flex-1 flex flex-col gap-1 items-center">
-    <label class="-inset-y-1 relative text-gray-800 text-base text-center">
-      <ChevronRightIcon class="float-right transform -rotate-45 justify-self-auto h-5 w-5 directional-icon" />
-    </label>
-    <label :class="['text-gray-400','font-thin','text-sm text-center','relative -inset-y-2',_bearings.ne.length<=3 && _bearings.ne.length>0?'lowStreetCountAlert':'']">{{_bearings.ne.length}}</label>
-  </div>
-  <div class="relative flex-1 flex flex-col gap-1 items-center">
-    <label class="-inset-y-1 relative text-gray-800 text-base text-center">
-      <ChevronLeftIcon class="float-right transform rotate-45 justify-self-auto h-5 w-5 directional-icon" />
-    </label>
-    <label :class="['text-gray-400','font-thin','text-sm text-center','relative -inset-y-2',_bearings.nw.length<=3 && _bearings.nw.length>0?'lowStreetCountAlert':'']">{{_bearings.nw.length}}</label>
-  </div>
-  <div class="relative flex-1 flex flex-col gap-1 pt-2 items-center">
-    <p class="text-xl">{{traceActive.features[0].geometry.coordinates.length}}</p>
-  </div>
-  <div class="relative flex-1 flex flex-col gap-1 pt-3 items-center">
-    <p v-if="weather.feels_like" class="text-sm">{{Math.round(weather.feels_like)}}°</p>
-  </div>
-</div>
-
-    </div>
-  </div>
-  <l-map class="" :options="{zoomControl: false}" :center="center" :zoom="parseInt(zoom)" @update:center="$emit('update-center',$event)" @update:zoom="$emit('update-zoom',$event)" @update:bounds="$emit('update-bounds',$event)">
-    <!-- <l-tile-layer v-if="basemaps.length>0" v-for="baseMap in basemaps" :key="baseMap.handle" :name="baseMap.name" :visible="baseMap.handle==basemap?true:false" :url="baseMap.urii" :attribution="baseMap.attribution" layer-type="base" /> -->
-    <l-control-zoom position="topright"></l-control-zoom>
-    <!-- <l-geo-json v-if="brookline" :geojson="brookline" :options="optsCenterlines" /> -->
-    <l-geo-json v-if="brighton" :geojson="brighton" :options="optsCenterlines" />
-
-    <!-- <l-geo-json v-if="traceActive.features && traceActive.features[0].geometry.coordinates.length>=2" :geojson="_CANDIDATES()" :options="optsCandidates" /> -->
-    <!-- <l-geo-json v-if="region=='brookline'" :geojson="brooklinePoly" :options="optsRegionBoundary" /> -->
-    <!-- <l-geo-json v-if="region=='brighton'" :geojson="brightonPoly" :options="optsRegionBoundary" /> -->
-    <!-- <l-geo-json v-if="_WINBUFFERBROOKLINE" :geojson="_WINBUFFERBROOKLINE" :options="optsTraceActive" />
+  <div id="mapContainer" class="">
+    <l-map style="z-index: 0;" class="" ref="MAP" :zoom="zoom" :center="center" :options="{zoomControl: false}">
+      <l-tile-layer key="carto_dark" name="Carto Positron Dark" visible="true" url="https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png" layer-type="base" />
+      <!-- <l-control-zoom position="topright"></l-control-zoom> -->
+      <!-- <l-geo-json v-if="brookline" :geojson="brookline" :options="optsCenterlines" /> -->
+      <!-- <l-geo-json v-if="brighton" :geojson="brighton" :options="optsCenterlines" /> -->
+      <!-- <l-geo-json v-if="traceActive.features && traceActive.features[0].geometry.coordinates.length>=2" :geojson="_CANDIDATES()" :options="optsCandidates" /> -->
+      <!-- <l-geo-json v-if="region=='brookline'" :geojson="brooklinePoly" :options="optsRegionBoundary" /> -->
+      <!-- <l-geo-json v-if="region=='brighton'" :geojson="brightonPoly" :options="optsRegionBoundary" /> -->
+      <!-- <l-geo-json v-if="_WINBUFFERBROOKLINE" :geojson="_WINBUFFERBROOKLINE" :options="optsTraceActive" />
    -->
-    <!-- <l-geo-json v-if="_WINBUFFERBRIGHTON" :geojson="_WINBUFFERBRIGHTON" :options="optsTraceActive" />
+      <!-- <l-geo-json v-if="_WINBUFFERBRIGHTON" :geojson="_WINBUFFERBRIGHTON" :options="optsTraceActive" />
    -->
-    <!-- <l-geo-json v-if="traceActive.features && traceActive.features[0].geometry.coordinates.length>=2" :geojson="traceActive" :options="optsTraceActive" /> -->
-    <!-- <l-geo-json v-if="traceActive.features && traceActive.features[0].geometry.coordinates.length>0" :geojson="_LEADBUFFER()" :options="optsTraceBuffer" /> -->
-    <l-marker :lat-lng="lll()">
+      <!-- <l-geo-json v-if="traceActive.features && traceActive.features[0].geometry.coordinates.length>=2" :geojson="traceActive" :options="optsTraceActive" /> -->
+      <!-- <l-geo-json v-if="traceActive.features && traceActive.features[0].geometry.coordinates.length>0" :geojson="_LEADBUFFER()" :options="optsTraceBuffer" /> -->
+      <!-- <l-marker :lat-lng="lll()">
       <l-icon :icon-anchor="[8,12]">
         <img src="../assets/noun_Arrow_2167324.svg" :style="`transform: rotate(${_BEARING()}deg)`">
       </l-icon>
-    </l-marker>
-  </l-map>
-  <!-- /root container div
- -->
+    </l-marker> -->
+    </l-map>
+  </div>
 </template>
 
 <script setup>
@@ -91,75 +33,30 @@ import * as turf from '@turf/turf'
 import { ChevronLeftIcon } from '@heroicons/vue/solid'
 import { ChevronRightIcon } from '@heroicons/vue/solid'
 
-const _WINBUFFERBROOKLINE = ref(turf.buffer(PROPS.brooklinePoly.features[0], -50, { units: 'meters' }))
-const _WINBUFFERBRIGHTON = ref(turf.buffer(PROPS.brightonPoly.features[0], -50, { units: 'meters' }))
-
-const _LEADBUFFER = () => turf.buffer(turf.point(PROPS.lastActive), 400, { units: 'meters' })
-
-onMounted(() => {
-  console.log(`map comp mounted`);
-})
-
-const _bearings = ref({ sw: [], se: [], ne: [], nw: [] })
-
-// const _nearest = ref({ nom: '...', dist: 9999 });
-const _nearest = ref('...');
-
-const _WEINTOWN = () => {
-
-    // cHEckS iF tHE mOSt RecENt TRacE POint Is WIThIN ThE TOWn bordER (Or NEaR ITs Edge)
-
-    let wit = null;
-    switch (true) {
-      case !PROPS.lastActive:
-        wit = 'streetPlateOk';
-        break;
-      case !turf.point(PROPS.lastActive):
-        wit = 'streetPlateOk';
-        break;
-      case (!turf.booleanWithin(turf.point(PROPS.lastActive), PROPS[`${PROPS.region}Poly`].features[0])):
-        wit = "streetPlateGone";
-        break;
-
-      case (turf.booleanWithin(turf.point(PROPS.lastActive), _WINBUFFERBROOKLINE.value)):
-        wit = 'streetPlateWarning';
-        break;
-
-      case (turf.booleanWithin(turf.point(PROPS.lastActive), _WINBUFFERBRIGHTON.value)):
-        wit = 'streetPlateWarning';
-        break;
-
-      default:
-        wit = 'streetPlateOk'
-    }
-
-    return wit;
-  } //wintown
-
-const _BEARING = () => (PROPS.traceActive.features[0].geometry.coordinates.length > 0 && (turf.bearing(PROPS.traceActive.features[0].geometry.coordinates[PROPS.traceActive.features[0].geometry.coordinates.length - 1], PROPS.traceActive.features[0].geometry.coordinates[PROPS.traceActive.features[0].geometry.coordinates.length - 2])) + 90)
-
-// console.log("PROPS.traceActive.features[0].geometry.coordinates", PROPS.traceActive.features[0].geometry.coordinates);
+const MAP = ref(null);
 
 const ROUTE = useRoute(),
   ROUTER = useRouter(),
-  DEBUG = { candidates: { last: null, count: 0 } },
   PROPS = defineProps({
-    bbox: String,
     basemaps: Array,
-    basemap: String,
-    zoom: String,
-    center: Object,
-    brookline: Object,
-    weather: Object,
-    brooklinePoly: Object,
-    brighton: Object,
-    brightonPoly: Object,
-    traceActive: Object,
-    lastActive: Object,
-    region: String,
-    styles: Object,
-    subs: Object
-  })
+    basemap: String
+  });
+
+const center = [44, -80];
+const zoom = 9;
+
+const _BBOXARRAYTOBOUNDSARRAY = (b) => [
+  [b[1], b[0]],
+  [b[3], b[2]]
+];
+
+
+onMounted(() => { console.log(`maptrace comp mounted`); })
+
+
+const _bearings = ref({ sw: [], se: [], ne: [], nw: [] })
+
+const _nearest = ref('...');
 
 const location = [40, -80]
 const options = {
@@ -182,17 +79,21 @@ const options = {
 const _abbreviate = (og) => {
 
   let pieces = og.split(" ") //wORDs iN THe oG striNG
-    // console.log("pieces", pieces);
   let sub = pieces.map(piece => {
-      let subbb = PROPS.subs.find(subb => subb.og.toLowerCase() == piece.toLowerCase());
-      return subbb ? subbb : null;
-    }).filter(Boolean)
-    // console.log("sub", sub);
+    let subbb = PROPS.subs.find(subb => subb.og.toLowerCase() == piece.toLowerCase());
+    return subbb ? subbb : null;
+  }).filter(Boolean)
   let rep = (sub && sub.length > 1) ? og.replace(sub[0].og, sub[0].re) : og;
-  // console.log("rep", rep);
   return rep;
 
 }
+
+// const _UV = (o) => {
+//   return new Promise((resolve, reject) => {
+//     console.log("o", o)
+//     resolve(o);
+//   })
+// }
 
 const _CANDIDATES = () => {
   let collection = [];
@@ -210,10 +111,6 @@ const _CANDIDATES = () => {
     if (currentFeature.properties.name.toLowerCase().indexOf('crown') >= 0) { console.log("currentFeature.properties.name", currentFeature.properties.name); }
     nearest = (nearestPoint && nearest.dist > nearestPoint.properties.dist) ? { nom: _abbreviate(currentFeature.properties.name), dist: nearestPoint.properties.dist } : nearest;
     _nearest.value = nearest.nom
-      // _nearest.value = nearestPoint ? _abbreviate(currentFeature.properties.name) : '...'
-      // _nearest.value = '...'
-
-    // _nearest.dist = nearestPoint ? nearestPoint.properties.dist : 0
 
     // SHOP The cEnterPOInt OF tHE FeaTurE AgAinST THE BUffer aroUnd thE lEAdiNg TracE point
     let cntr = turf.center(currentFeature)
@@ -249,7 +146,6 @@ const _CANDIDATES = () => {
   _bearings.value.se = bearingsSE;
   _bearings.value.ne = bearingsNE;
   _bearings.value.nw = bearingsNW;
-  // _nearest = nearest;
 
   return turf.featureCollection(collection.length > 0 ? collection : []);
 }
@@ -258,57 +154,11 @@ const lll = () => {
   let o = PROPS.traceActive.features[0].geometry.coordinates.length > 0 ? PROPS.traceActive.features[0].geometry.coordinates[PROPS.traceActive.features[0].geometry.coordinates.length - 1] : [0, 0]
   return o ? [o[1], o[0]] : [];
 }
-
-const optsCandidates = {
-  className: "lin",
-  style: function() {
-    return PROPS.styles.candidates
-  }
-};
-const optsRegionBoundary = {
-  style: function() {
-    let style = PROPS.styles.regionBoundary
-    style.opacity = .3; //nudge opacity
-    return style;
-  }
-};
-
-const optsTraceBuffer = {
-  style: function() {
-    let style = PROPS.styles.buffer
-    style.opacity = 0;
-    style.fillOpacity = 0;
-    return style;
-  }
-};
-const optsTraceActive = {
-  style: function(feature) {
-    let style = PROPS.styles.traceActive
-    style.opacity = .8;
-    return style;
-  }
-}
-
-const optsTraceArkive = {
-  style: function(feature) {
-    return PROPS.styles.traceArkive
-      // return { color: `rgba(155, 240, 212, 1)`, fill: false, dashArray: "2 5 10", opacity: .9, width: 3, weight: 8 }
-  }
-}
-const optsCenterlines = {
-  style: function(feature) {
-    return feature.properties.done == 'done' ? PROPS.styles.centerlinesDone : PROPS.styles.centerlinesNott
-  }
-}
-
-const _BBOX2BOUNDS = () => {
-  // w,S,e,N
-  let b = PROPS.bbox.split(",")
-  return latLngBounds({ lat: b[1], lng: b[0] }, { lat: b[3], lng: b[2] })
-}
 </script>
 
-<style scoped>
+<style>
+.mapContainer {}
+
 .leaflet-control-container {
   display: block;
 }
@@ -323,45 +173,5 @@ const _BBOX2BOUNDS = () => {
   font-style: normal;
   font-weight: 400m;
   src: local('Hanley Pro Slim'), local('Hanley Pro Slim'), url('../assets/fonts/Hanley-Pro-Slim.otf') format('truetype');
-}
-
-.lowStreetCountAlert {
-  font-weight: 800;
-  color: v-bind(styles.candidates.color);
-}
-
-#streetPlateParent {
-  display: block;
-  border-radius: 10px;
-  line-height: 1.1;
-  vertical-align: middle;
-}
-
-.streetPlateOk {
-  background-color: v-bind(styles.white);
-  color: #000000;
-}
-
-.streetPlateWarning {
-  background-color: v-bind(styles.warning);
-  color: white;
-}
-
-.streetPlateGone {
-  background-color: v-bind(styles.red);
-  color: white;
-}
-
-#streetPlateContentWrapper {
-  text-align: center;
-  border: 3px solid;
-  border-radius: 10px;
-  font-family: "Hanley Pro Slim";
-  font-size: 3em;
-  font-weight: 800;
-}
-
-.directional-icon {
-  color: v-bind(styles.red);
 }
 </style>
